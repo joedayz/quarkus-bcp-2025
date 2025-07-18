@@ -1,26 +1,35 @@
 package com.bcp;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import java.util.Optional;
 
 @ApplicationScoped
 public class ExpenseValidator {
 
-    private static final boolean DEBUG_ENABLED = true;
+    @ConfigProperty(name = "expense.debug.enabled", defaultValue = "false")
+    boolean debugEnabled;
 
-    private static final int RANGE_HIGH = 1000;
+    @ConfigProperty(name = "expense.debug.message")
+    Optional<String> debugMessage;
 
-    private static final int RANGE_LOW = 250;
+    @ConfigProperty(name = "expense.range-high")
+    int rangeHigh;
+
+    @ConfigProperty(name = "expense.range-low")
+    int rangeLow;
 
     public void debugRanges() {
-        System.out.println("Range - High: " + RANGE_HIGH);
-        System.out.println("Range - Low: " + RANGE_LOW);
+        System.out.println("Range - High: " + rangeHigh);
+        System.out.println("Range - Low: " + rangeLow);
     }
 
     public boolean isValidAmount(int amount) {
-        if (DEBUG_ENABLED) {
+        if (debugEnabled) {
             debugRanges();
         }
 
-        return amount >= RANGE_LOW && amount <= RANGE_HIGH;
+        return amount >= rangeLow && amount <= rangeHigh;
     }
 }
