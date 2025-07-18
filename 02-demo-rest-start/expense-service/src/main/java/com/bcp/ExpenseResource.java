@@ -1,30 +1,34 @@
 package com.bcp;
 
-import jakarta.ws.rs.WebApplicationException;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Set;
 import java.util.UUID;
 
-
+@Path("/expenses")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ExpenseResource {
 
-
+    @Inject
     public ExpenseService expenseService;
 
-
-
+    @GET
     public Set<Expense> list() {
         return expenseService.list();
     }
 
-
-
+    @POST
     public Expense create(Expense expense) {
         return expenseService.create(expense);
     }
 
 
+    @DELETE
+    @Path("/{uuid}")
     public Set<Expense> delete(UUID uuid) {
         if (!expenseService.delete(uuid)) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
@@ -32,7 +36,7 @@ public class ExpenseResource {
         return expenseService.list();
     }
 
-
+    @PUT
     public void update(Expense expense) {
         expenseService.update(expense);
     }
