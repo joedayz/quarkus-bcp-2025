@@ -16,16 +16,47 @@ public class ExpenseResource {
     @Inject
     public ExpenseService expenseService;
 
+    /**
+     * curl -X GET http://localhost:8080/expenses \
+     *   -H "Content-Type: application/json"
+     * @return
+     */
     @GET
     public Set<Expense> list() {
         return expenseService.list();
     }
 
+    /**
+     * curl -X POST http://localhost:8080/expenses \
+     *   -H "Content-Type: application/json" \
+     *   -d '{
+     *     "name": "Café en Starbucks",
+     *     "paymentMethod": "DEBIT_CARD",
+     *     "amount": "5.50"
+     *   }'
+     *   curl -X POST http://localhost:8080/expenses \
+     *   -H "Content-Type: application/json" \
+     *   -d '{
+     *     "name": "Almuerzo en restaurante",
+     *     "paymentMethod": "CREDIT_CARD",
+     *     "amount": "25.00"
+     *   }'
+     *
+     *
+     * @param expense
+     * @return
+     */
     @POST
     public Expense create(Expense expense) {
         return expenseService.create(expense);
     }
 
+    /**
+     * curl -X DELETE http://localhost:8080/expenses/UUID_DEL_GASTO_A_ELIMINAR \
+     *   -H "Content-Type: application/json"
+     * @param uuid
+     * @return
+     */
 
     @DELETE
     @Path("/{uuid}")
@@ -36,6 +67,17 @@ public class ExpenseResource {
         return expenseService.list();
     }
 
+    /**
+     * curl -X PUT http://localhost:8080/expenses \
+     *   -H "Content-Type: application/json" \
+     *   -d '{
+     *     "uuid": "UUID_DEL_GASTO_A_ACTUALIZAR",
+     *     "name": "Café en Starbucks - Actualizado",
+     *     "paymentMethod": "CASH",
+     *     "amount": "6.00"
+     *   }'
+     * @param expense
+     */
     @PUT
     public void update(Expense expense) {
         expenseService.update(expense);
