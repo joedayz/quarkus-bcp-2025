@@ -23,7 +23,7 @@ The application can be packaged using:
 ```
 
 It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Be aware that it's not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
 
 The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
 
@@ -52,6 +52,91 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/expense-service-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+
+## API Testing with cURL
+
+Once the application is running, you can test the Expense API endpoints using the following cURL commands:
+
+### 1. List Expenses (GET)
+```bash
+# List all expenses (page 1, 5 items per page)
+curl -X GET "http://localhost:8080/expenses" \
+  -H "Content-Type: application/json"
+
+# List expenses with custom pagination
+curl -X GET "http://localhost:8080/expenses?pageSize=10&pageNum=1" \
+  -H "Content-Type: application/json"
+```
+
+### 2. Create Expense (POST)
+```bash
+curl -X POST "http://localhost:8080/expenses" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Almuerzo de trabajo",
+    "paymentMethod": "CREDIT_CARD",
+    "amount": "25.50",
+    "associateId": 1
+  }'
+```
+
+### 3. Update Expense (PUT)
+```bash
+curl -X PUT "http://localhost:8080/expenses" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 1,
+    "uuid": "123e4567-e89b-12d3-a456-426614174000",
+    "name": "Almuerzo de trabajo actualizado",
+    "paymentMethod": "DEBIT_CARD",
+    "amount": "30.00",
+    "associateId": 1
+  }'
+```
+
+### 4. Delete Expense (DELETE)
+```bash
+curl -X DELETE "http://localhost:8080/expenses/123e4567-e89b-12d3-a456-426614174000" \
+  -H "Content-Type: application/json"
+```
+
+### Complete Testing Flow
+```bash
+# 1. Create an expense
+curl -X POST "http://localhost:8080/expenses" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Café",
+    "paymentMethod": "CASH",
+    "amount": "5.00",
+    "associateId": 1
+  }'
+
+# 2. List expenses
+curl -X GET "http://localhost:8080/expenses"
+
+# 3. Update the expense (use the ID and UUID returned from POST)
+curl -X PUT "http://localhost:8080/expenses" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id": 1,
+    "uuid": "UUID_RETURNED_FROM_POST",
+    "name": "Café premium",
+    "paymentMethod": "CREDIT_CARD",
+    "amount": "7.50",
+    "associateId": 1
+  }'
+
+# 4. Delete the expense
+curl -X DELETE "http://localhost:8080/expenses/UUID_RETURNED_FROM_POST"
+```
+
+### Notes
+- **Port**: Commands assume the application is running on `localhost:8080`
+- **associateId**: You need a valid `associateId` that exists in the database
+- **PaymentMethod**: Valid values are `CASH`, `CREDIT_CARD`, `DEBIT_CARD`
+- **UUID**: For DELETE and PUT operations, you need a valid UUID that exists in the database
+- **amount**: Must be sent as a string in the JSON payload
 
 ## Related Guides
 
