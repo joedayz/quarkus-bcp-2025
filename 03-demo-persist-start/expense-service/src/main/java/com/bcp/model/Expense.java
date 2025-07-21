@@ -1,7 +1,6 @@
 package com.bcp.model;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.json.bind.annotation.JsonbCreator;
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbTransient;

@@ -2,8 +2,13 @@ package com.bcp.rest;
 
 
 import com.bcp.model.Expense;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Page;
+import io.quarkus.panache.common.Sort;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,32 +19,39 @@ import java.util.UUID;
 public class ExpenseResource {
 
     @GET
-    // TODO 1: Implement with a call to "listAll()" of Expense entity.
-    // TODO 2: Add pagination and sort by "amount" and "associateId".
-    public List<Expense> list() {
-        return null;
+    public List<Expense> list(@DefaultValue("5") @QueryParam("pageSize") int pageSize,
+                              @DefaultValue("1") @QueryParam("pageNum") int pageNum) {
+        PanacheQuery<Expense>
+                expenseQuery = Expense.findAll(Sort.by("amount").and("associateId"));
+        return expenseQuery.page(Page.of(pageNum-1, pageSize)).list();
     }
 
     @POST
-    // TODO: Make the method transactional
+    @Transactional
     public Expense create(final Expense expense) {
         Expense newExpense = Expense.of(expense.name, expense.paymentMethod,
                 expense.amount.toString(), expense.associateId);
-        // TODO: Use the "persist()" method of the entity.
-
+        newExpense.persist();
         return newExpense;
     }
 
     @DELETE
     @Path("{uuid}")
-    // TODO: Make the method transactional
+    @Transactional
     public void delete(@PathParam("uuid") final UUID uuid) {
-        // TODO: Use the "delete()" method of the entity and list the expenses
+        long numExpensesDeleted = Expense.delete("uuid", uuid);
+        if(numExpensesDeleted==0){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
     }
 
     @PUT
-    // TODO: Make the method transactional
+    @Transactional
     public void update(final Expense expense) {
-        // TODO: Use the "update()" method of the entity.
+        try{
+            Expense.update(expense);
+        }catch (RuntimeException e){
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
     }
 }
