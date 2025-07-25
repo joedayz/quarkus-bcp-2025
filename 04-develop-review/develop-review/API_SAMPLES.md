@@ -145,6 +145,9 @@ curl -X POST "http://localhost:8080/speakers" \
   }'
 ```
 
+curl -X GET "http://localhost:8080/speakers?pageIndex=0&pageSize=5" \
+-H "Accept: application/json"
+
 ## Notes
 
 - The API uses JSON for request/response format
