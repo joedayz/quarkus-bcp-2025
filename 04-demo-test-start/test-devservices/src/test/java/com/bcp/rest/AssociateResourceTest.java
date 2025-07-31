@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
 @TestHTTPEndpoint( AssociateResource.class )
+@WithPostgresDB(name = "tc-test", username = "tc-user", password = "tc-pass")
 public class AssociateResourceTest {
 
     @Test
