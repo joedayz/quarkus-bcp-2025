@@ -1,21 +1,18 @@
 package com.bcp;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.not;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.common.http.TestHTTPEndpoint;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
-import io.restassured.http.ContentType;
-
-
+@QuarkusTest
+@TestHTTPEndpoint(ScheduleResource.class)
 public class ScheduleResourceTest {
 
     private static final int GIVEN_ID = 101;
