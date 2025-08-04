@@ -8,3 +8,8 @@ To build the container image and push it to the registry, run:
 ```sh
 ./push_image.sh
 ```
+
+
+```sh
+podman run -d --name prices-service -p 5500:5000 docker.io/joedayz/do378-reactive-architecture-prices
+```
