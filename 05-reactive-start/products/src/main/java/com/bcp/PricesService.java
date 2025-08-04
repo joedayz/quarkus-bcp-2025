@@ -14,5 +14,5 @@ public interface PricesService {
 
     @GET
     @Path( "/history/{productId}" )
-    ProductPriceHistory getProductPriceHistory( @PathParam( "productId" ) final Long productId );
+    Uni<ProductPriceHistory> getProductPriceHistory( @PathParam( "productId" ) final Long productId );
 }
