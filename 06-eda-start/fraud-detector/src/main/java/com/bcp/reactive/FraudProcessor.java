@@ -9,6 +9,9 @@ import org.jboss.logging.Logger;
 public class FraudProcessor {
     private static final Logger LOGGER = Logger.getLogger(FraudProcessor.class);
 
+
+
+
     private Integer calculateFraudScore(Long amount) {
         if (amount > 25000) {
             return 75;
