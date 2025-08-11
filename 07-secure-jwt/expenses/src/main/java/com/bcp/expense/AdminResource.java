@@ -14,6 +14,7 @@ public class AdminResource {
 
     @GET
     @Path( "/expenses" )
+    //TODO only admin users
     public List<Expense> listAllExpenses() {
         return expenses.list();
     }
