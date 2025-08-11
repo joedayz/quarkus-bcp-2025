@@ -1,5 +1,7 @@
 package com.bcp.event;
 
+import com.bcp.model.Affiliation;
+
 public class SpeakerWasCreated {
     public Long id;
 
