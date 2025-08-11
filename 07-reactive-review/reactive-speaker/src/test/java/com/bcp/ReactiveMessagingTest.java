@@ -20,6 +20,7 @@ import jakarta.enterprise.inject.Any;
 import jakarta.inject.Inject;
 import java.util.List;
 
+import static com.bcp.SpeakerResourceTest.*;
 import static org.awaitility.Awaitility.await;
 
 @QuarkusTest
