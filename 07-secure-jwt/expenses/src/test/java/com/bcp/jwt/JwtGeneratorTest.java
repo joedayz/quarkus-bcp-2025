@@ -53,7 +53,7 @@ public class JwtGeneratorTest {
 
         JsonWebToken jwt = jwtParser.parse( token );
 
-        assertEquals( "https://example.com/redhattraining", jwt.getClaim( "iss" ), "JWT 'iss' claim not set as expected" );
+        assertEquals( "https://example.com/bcptraining", jwt.getClaim( "iss" ), "JWT 'iss' claim not set as expected" );
     }
 
     @Test
