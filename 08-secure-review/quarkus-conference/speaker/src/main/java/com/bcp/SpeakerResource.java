@@ -26,12 +26,14 @@ public class SpeakerResource {
     private SpeakerIdGenerator generator = new SpeakerIdGenerator();
 
     @GET
+    @RolesAllowed("read")
     public List<Speaker> getSpeakers() {
         return Speaker.listAll();
     }
 
     @GET
     @Path("/{uuid}")
+    @RolesAllowed("read")
     public Optional<Speaker> findByUuid(@PathParam("uuid") String uuid) {
 
         if (uuid == null) {
@@ -42,6 +44,7 @@ public class SpeakerResource {
 
     @POST
     @Transactional
+    @RolesAllowed("modify")
     public Speaker insert(Speaker speaker) {
         speaker.uuid=generator.generate();
         speaker.persist();
@@ -58,6 +61,7 @@ public class SpeakerResource {
     @PUT
     @Transactional
     @Path("/{uuid}")
+    @RolesAllowed("modify")
     public Speaker update(@PathParam("uuid") String uuid, Speaker speaker) {
         if (null==uuid || null==Speaker.find("uuid", uuid)) {
             throw new NotFoundException();

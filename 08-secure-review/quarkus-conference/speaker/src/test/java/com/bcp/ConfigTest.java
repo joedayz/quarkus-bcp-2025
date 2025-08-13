@@ -11,13 +11,13 @@ public class ConfigTest {
     private final Config props = ConfigProvider.getConfig();
 
     private final String OIDC_CONFIG_URL = props.getValue("quarkus.oidc.auth-server-url", String.class);
-    private final String OIDC_URL = "https://localhost:9999/realms/quarkus";
+    private final String OIDC_URL = "https://localhost:8888/realms/quarkus";
 
     private final String OIDC_CONFIG_CLIENT_ID = props.getValue("quarkus.oidc.client-id", String.class);
     private final String OIDC_CLIENT_ID = "backend-service";
 
     private final String OIDC_CONFIG_CLIENT_PW = props.getValue("quarkus.oidc.credentials.secret", String.class);
-    private final String OIDC_CLIENT_PW = "secret";
+    private final String OIDC_CLIENT_PW = "dk9dYtW7usj1Nma1lo6jXmcN7we6qmeH";
 
 
     @Test
