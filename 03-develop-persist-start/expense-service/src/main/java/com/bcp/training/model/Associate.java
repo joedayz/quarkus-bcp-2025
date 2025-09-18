@@ -12,16 +12,14 @@ import jakarta.persistence.OneToMany;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
-@Entity
-public class Associate extends PanacheEntity {
+// TODO: Add @Entity annotation and extend PanacheEntity
+public class Associate {
     public String name;
 
-    @JsonbTransient
-    @OneToMany(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // TODO: Add one to many relationship between associate and expenses
     public List<Expense> expenses = new ArrayList<>();
 
-    public Associate() {
-    }
+    // TODO: Add a no-argument constructor
 
     public Associate(String name) {
         this.name = name;

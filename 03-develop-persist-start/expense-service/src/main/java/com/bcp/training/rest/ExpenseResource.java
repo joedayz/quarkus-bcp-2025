@@ -3,7 +3,6 @@ package com.bcp.training.rest;
 import java.util.List;
 import java.util.UUID;
 
-import com.bcp.training.model.Expense;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -19,6 +18,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.DefaultValue;
 
+import com.bcp.training.model.Expense;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
@@ -30,39 +30,32 @@ import io.quarkus.panache.common.Sort;
 public class ExpenseResource {
 
     @GET
-    public List<Expense> list(@DefaultValue("5") @QueryParam("pageSize") int pageSize,
-                              @DefaultValue("1") @QueryParam("pageNum") int pageNum) {
-        PanacheQuery<Expense> expenseQuery = Expense.findAll(Sort.by("amount").and("associateId"));
-        return expenseQuery.page(Page.of(pageNum - 1, pageSize)).list();
+    // TODO 1: Implement with a call to "listAll()" of Expense entity.
+    // TODO 2: Add pagination and sort by "amount" and "associateId".
+    public List<Expense> list() {
+        return null;
     }
 
     @POST
-    @Transactional
+    // TODO: Make the method transactional
     public Expense create(final Expense expense) {
         Expense newExpense = Expense.of(expense.name, expense.paymentMethod,
                 expense.amount.toString(), expense.associateId);
-        newExpense.persist();
+        // TODO: Use the "persist()" method of the entity.
 
         return newExpense;
     }
 
     @DELETE
     @Path("{uuid}")
-    @Transactional
+    // TODO: Make the method transactional
     public void delete(@PathParam("uuid") final UUID uuid) {
-        long numExpensesDeleted = Expense.delete("uuid", uuid);
-        if (numExpensesDeleted == 0) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        // TODO: Use the "delete()" method of the entity and list the expenses
     }
 
     @PUT
-    @Transactional
+    // TODO: Make the method transactional
     public void update(final Expense expense) {
-        try {
-            Expense.update(expense);
-        } catch (RuntimeException e) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+        // TODO: Use the "update()" method of the entity.
     }
 }

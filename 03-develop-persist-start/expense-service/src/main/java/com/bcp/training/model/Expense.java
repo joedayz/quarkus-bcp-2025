@@ -2,8 +2,8 @@ package com.bcp.training.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.Optional;
 
 import jakarta.json.bind.annotation.JsonbCreator;
 import jakarta.json.bind.annotation.JsonbDateFormat;
@@ -14,13 +14,13 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
-@Entity
-public class Expense extends PanacheEntity {
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
+// TODO: Add @Entity annotation and extend PanacheEntity
+public class Expense {
 
     public enum PaymentMethod {
         CASH, CREDIT_CARD, DEBIT_CARD,
@@ -35,26 +35,23 @@ public class Expense extends PanacheEntity {
     public PaymentMethod paymentMethod;
     public BigDecimal amount;
 
-    @JsonbTransient
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "associate_id", insertable = false, updatable = false)
+    // TODO: Add many-to-one relationship between expense and associate
     public Associate associate;
 
-    @Column(name = "associate_id")
+     // TODO: Annotate the associateId with @Column
     public Long associateId;
 
-    public Expense() {
-    }
+    // TODO: Add a no-argument constructor
 
     public Expense(UUID uuid, String name, LocalDateTime creationDate,
-                   PaymentMethod paymentMethod, String amount, Associate associate) {
+            PaymentMethod paymentMethod, String amount, Associate associate) {
         this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
         this.paymentMethod = paymentMethod;
         this.amount = new BigDecimal(amount);
         this.associate = associate;
-        this.associateId = associate.id;
+        // TODO: Add associateId association
     }
 
     public Expense(String name, PaymentMethod paymentMethod, String amount, Associate associate) {
@@ -63,22 +60,11 @@ public class Expense extends PanacheEntity {
 
     @JsonbCreator
     public static Expense of(String name, PaymentMethod paymentMethod, String amount, Long associateId) {
-        return Associate.<Associate>findByIdOptional(associateId)
-                .map(associate -> new Expense(name, paymentMethod, amount, associate))
-                .orElseThrow(RuntimeException::new);
+
+        // TODO: Update regarding the new relationship
+        return new Expense(name, paymentMethod, amount, null);
     }
 
-    public static void update(final Expense expense) {
-        Optional<Expense> previous = Expense.findByIdOptional(expense.id);
-        previous.ifPresentOrElse((update) -> {
-            update.uuid = expense.uuid;
-            update.name = expense.name;
-            update.amount = expense.amount;
-            update.paymentMethod = expense.paymentMethod;
-            update.persist();
-        }, () -> {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        });
-    }
+    // TODO: Add update() method
 
 }
