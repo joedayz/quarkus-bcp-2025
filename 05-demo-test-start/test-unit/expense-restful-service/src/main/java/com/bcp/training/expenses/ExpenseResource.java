@@ -1,4 +1,4 @@
-package com.redhat.training.expenses;
+package com.bcp.training.expenses;
 
 import java.util.List;
 import java.util.UUID;
