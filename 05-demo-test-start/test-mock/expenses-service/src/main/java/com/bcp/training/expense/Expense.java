@@ -1,4 +1,4 @@
-package com.redhat.training.expense;
+package com.bcp.training.expense;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 

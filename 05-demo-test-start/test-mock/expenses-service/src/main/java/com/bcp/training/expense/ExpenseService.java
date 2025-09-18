@@ -1,4 +1,4 @@
-package com.redhat.training.expense;
+package com.bcp.training.expense;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;

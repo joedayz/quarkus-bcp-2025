@@ -1,4 +1,4 @@
-package com.redhat.training.expense;
+package com.bcp.training.expense;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
