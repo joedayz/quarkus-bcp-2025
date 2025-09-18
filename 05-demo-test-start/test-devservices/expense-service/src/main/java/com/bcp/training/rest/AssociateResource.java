@@ -1,4 +1,4 @@
-package com.redhat.training.rest;
+package com.bcp.training.rest;
 
 import java.util.List;
 import jakarta.ws.rs.Consumes;
@@ -7,7 +7,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-import com.redhat.training.model.Associate;
+import com.bcp.training.model.Associate;
 
 @Path("/associates")
 @Consumes(MediaType.APPLICATION_JSON)

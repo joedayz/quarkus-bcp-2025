@@ -1,4 +1,4 @@
-package com.redhat.training.model;
+package com.bcp.training.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

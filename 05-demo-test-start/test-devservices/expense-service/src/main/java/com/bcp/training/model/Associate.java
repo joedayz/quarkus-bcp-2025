@@ -1,4 +1,4 @@
-package com.redhat.training.model;
+package com.bcp.training.model;
 
 import java.util.List;
 import java.util.ArrayList;

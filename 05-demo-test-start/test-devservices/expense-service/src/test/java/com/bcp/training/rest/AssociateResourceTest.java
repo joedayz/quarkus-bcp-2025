@@ -1,4 +1,4 @@
-package com.redhat.training.rest;
+package com.bcp.training.rest;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-import com.redhat.training.model.Associate;
+import com.bcp.training.model.Associate;
 
 @QuarkusTest
 @TestHTTPEndpoint( AssociateResource.class )

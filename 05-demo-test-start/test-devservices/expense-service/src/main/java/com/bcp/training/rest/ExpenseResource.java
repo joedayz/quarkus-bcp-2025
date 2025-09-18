@@ -1,4 +1,4 @@
-package com.redhat.training.rest;
+package com.bcp.training.rest;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.QueryParam;
 
-import com.redhat.training.model.Expense;
+import com.bcp.training.model.Expense;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Page;
