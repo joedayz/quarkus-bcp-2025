@@ -28,10 +28,10 @@ class BankAccountsResourceTest {
         );
 
         given()
-        .when()
-            .get("/accounts")
-        .then()
-            .statusCode(200)
-            .body("$.size()", is(1));
+                .when()
+                .get("/accounts")
+                .then()
+                .statusCode(200)
+                .body("$.size()", is(1));
     }
 }

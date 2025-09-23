@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50e93345-5074-48b1-a4b6-ea4bb3ab3ec0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/event/BankAccountWasCreated.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/model/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/model/BankAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/reactive/AccountTypeProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/reactive/AccountTypeProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/resource/BankAccountsResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/resource/BankAccountsResource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/java/com/bcp/training/serde/BankAccountWasCreatedDeserializer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/test/java/com/bcp/training/AccountTypeProcessorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/test/java/com/bcp/training/AccountTypeProcessorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/joedayz-bank/src/test/java/com/bcp/training/BankAccountsResourceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/src/test/java/com/bcp/training/BankAccountsResourceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraud-detector/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fraud-detector/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fraud-detector/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fraud-detector/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/joedayz-bank/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/joedayz-bank/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,12 +31,10 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Proyectos/quarkus-bcp-2025/09-reactive-eda-solution",
+    "last_opened_file_path": "C:/bcp/quarkus-bcp-2025/06-reactive-eda-start",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -54,97 +43,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Proyectos\quarkus-bcp-2025\09-reactive-eda-solution\joedayz-bank\src\test\java\com\bcp\training" />
-      <recent name="C:\Proyectos\quarkus-bcp-2025\09-reactive-eda-solution\joedayz-bank\src\main\java\com\bcp\training\reactive" />
-      <recent name="C:\Proyectos\quarkus-bcp-2025\09-reactive-eda-solution\joedayz-bank\src\main\java\com\bcp\training\resource" />
-      <recent name="C:\Proyectos\quarkus-bcp-2025\09-reactive-eda-solution\joedayz-bank\src\main\java\com\bcp\training\model" />
-    </key>
-  </component>
-  <component name="RunManager" selected="Quarkus.fraud-detector">
-    <configuration name="fraud-detector" type="QuarkusRunConfigurationType" factoryName="Quarkus" nameIsGenerated="true">
-      <module name="fraud-detector" />
-      <QsMavenRunConfiguration>
-        <MavenSettings>
-          <option name="myGeneralSettings" />
-          <option name="myRunnerSettings" />
-          <option name="myRunnerParameters">
-            <MavenRunnerParameters>
-              <option name="cmdOptions" />
-              <option name="profiles">
-                <set />
-              </option>
-              <option name="goals">
-                <list>
-                  <option value="quarkus:dev" />
-                </list>
-              </option>
-              <option name="multimoduleDir" />
-              <option name="pomFileName" value="pom.xml" />
-              <option name="profilesMap">
-                <map />
-              </option>
-              <option name="projectsCmdOptionValues">
-                <list />
-              </option>
-              <option name="resolveToWorkspace" value="false" />
-              <option name="workingDirPath" value="$PROJECT_DIR$/fraud-detector" />
-            </MavenRunnerParameters>
-          </option>
-        </MavenSettings>
-        <targetMavenLocalRepo />
-        <emulateTerminal>false</emulateTerminal>
-        <profile>dev</profile>
-      </QsMavenRunConfiguration>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="joedayz-bank" type="QuarkusRunConfigurationType" factoryName="Quarkus" nameIsGenerated="true">
-      <module name="joedayz-bank" />
-      <QsMavenRunConfiguration>
-        <MavenSettings>
-          <option name="myGeneralSettings" />
-          <option name="myRunnerSettings" />
-          <option name="myRunnerParameters">
-            <MavenRunnerParameters>
-              <option name="cmdOptions" />
-              <option name="profiles">
-                <set />
-              </option>
-              <option name="goals">
-                <list>
-                  <option value="quarkus:dev" />
-                </list>
-              </option>
-              <option name="multimoduleDir" />
-              <option name="pomFileName" value="pom.xml" />
-              <option name="profilesMap">
-                <map />
-              </option>
-              <option name="projectsCmdOptionValues">
-                <list />
-              </option>
-              <option name="resolveToWorkspace" value="false" />
-              <option name="workingDirPath" value="$PROJECT_DIR$/joedayz-bank" />
-            </MavenRunnerParameters>
-          </option>
-        </MavenSettings>
-        <targetMavenLocalRepo />
-        <emulateTerminal>false</emulateTerminal>
-        <profile>dev</profile>
-      </QsMavenRunConfiguration>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.27812.49" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-IU-251.27812.49" />
       </set>
     </attachedChunks>
   </component>
@@ -161,7 +64,6 @@
       <workItem from="1754669085389" duration="240000" />
       <workItem from="1754950101846" duration="415000" />
       <workItem from="1756332626959" duration="656000" />
-      <workItem from="1758646212214" duration="429000" />
     </task>
     <servers />
   </component>
