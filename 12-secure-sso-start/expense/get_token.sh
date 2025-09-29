@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 if [ $# -lt 2 ]; then
   echo 1>&2 "Usage: . $0 username password"
@@ -11,17 +11,17 @@ fi
 SERVER="http://localhost:8888/realms/quarkus/protocol/openid-connect/token"
 SECRET_ID="backend-service"
 SECRET_PW="secret"
-USERNAME="$1"
-PASSWORD="$2"
+USER="$1"
+USER_PWD="$2"
 
 export TOKEN=$(curl --insecure -s -X POST "$SERVER" \
   --user ${SECRET_ID}:${SECRET_PW} \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=${USERNAME}" \
-  -d "password=${PASSWORD}" \
+  -d "username=${USER}" \
+  -d "password=${USER_PWD}" \
   -d 'grant_type=password' \
-  | jq --raw-output '.access_token'
-)
+  | jq -r '.access_token')
+
 
 if [[ "$TOKEN" == "null" ]] || [[ "$TOKEN" == ""  ]]; then
     echo 1>&2 "Token was not retrieved! Review input parameters."

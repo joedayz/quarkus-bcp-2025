@@ -1,0 +1,75 @@
+{
+  "realm": "quarkus",
+  "enabled": true,
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "sslRequired": "none",
+  "requiredCredentials": ["password"],
+  "passwordPolicy": null,
+  "verifyEmail": true,
+  "loginWithEmailAllowed": true,
+  "roles": {
+    "realm": [
+      { "name": "read", "description": "Can read expenses" },
+      { "name": "modify", "description": "Can create/update expenses" },
+      { "name": "delete", "description": "Can delete expenses" }
+    ]
+  },
+  "users": [
+    {
+      "username": "user",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "user@example.com",
+      "firstName": "User",
+      "lastName": "Test",
+      "credentials": [
+        { "type": "password", "value": "redhat", "temporary": false }
+      ],
+      "requiredActions": [],
+      "notBefore": 0,
+      "createdTimestamp": 1640995200000,
+      "realmRoles": ["read"]
+    },
+    {
+      "username": "superuser",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "superuser@example.com",
+      "firstName": "Super",
+      "lastName": "User",
+      "credentials": [
+        { "type": "password", "value": "redhat", "temporary": false }
+      ],
+      "requiredActions": [],
+      "notBefore": 0,
+      "createdTimestamp": 1640995200000,
+      "realmRoles": ["read", "modify", "delete"]
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "backend-service",
+      "name": "backend-service",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "secret",
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://localhost:8081/*",
+        "http://localhost:*/*"
+      ],
+      "webOrigins": ["+"]
+    }
+  ]
+}
+
+
