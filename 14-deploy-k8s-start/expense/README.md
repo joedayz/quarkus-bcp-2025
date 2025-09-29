@@ -54,3 +54,30 @@ If you want to learn more about building native executables, please consult http
 Easily start your RESTful Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## Run on Kind with Podman
+
+The OpenShift `kubefiles/` remain unchanged. For Kind, use the manifests in `k8s/` and the helper scripts in `scripts/`.
+
+Prereqs: install Kind, Podman and kubectl. On macOS with Podman, ensure the Podman machine is running.
+
+1. Create the Kind cluster (Podman provider) and map host 8080 -> NodePort 30080:
+```bash
+./scripts/kind-up.sh
+```
+2. Build the JVM image with Podman and load it into the Kind cluster:
+```bash
+./scripts/build-and-load.sh
+```
+3. Deploy the app manifests for Kind:
+```bash
+./scripts/deploy-kind.sh
+```
+4. Test the service:
+```bash
+curl http://localhost:8080/q/health
+```
+
+Notes:
+- The image tag used is `expense-restful-service:latest`.
+- The service is of type NodePort on 30080; `kind-config.yaml` maps it to localhost:8080.
