@@ -1,4 +1,4 @@
-package com.redhat.training.expenses;
+package com.bcp.training.expenses;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

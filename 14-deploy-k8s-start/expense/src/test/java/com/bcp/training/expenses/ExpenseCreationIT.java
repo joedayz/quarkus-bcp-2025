@@ -1,4 +1,4 @@
-package com.redhat.training.expenses;
+package com.bcp.training.expenses;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
