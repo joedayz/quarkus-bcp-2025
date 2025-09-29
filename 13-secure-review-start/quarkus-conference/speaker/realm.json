@@ -68,6 +68,24 @@
         "http://localhost:*/*"
       ],
       "webOrigins": ["+"]
+    },
+    {
+      "clientId": "frontend-service",
+      "name": "frontend-service",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": false,
+      "redirectUris": [
+        "http://localhost:9000/*",
+        "http://localhost:8080/*"
+      ],
+      "webOrigins": [
+        "http://localhost:9000",
+        "http://localhost:8080"
+      ]
     }
   ]
 }
