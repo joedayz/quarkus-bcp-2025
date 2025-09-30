@@ -9,12 +9,12 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ServiceUnavailableException;
 import org.eclipse.microprofile.faulttolerance.exceptions.CircuitBreakerOpenException;
 
-import com.redhat.training.cpu.CpuStats;
-import com.redhat.training.cpu.CpuStatsService;
-import com.redhat.training.status.StatusService;
-import com.redhat.training.cpu.CpuPredictionService;
-import com.redhat.training.sysinfo.Info;
-import com.redhat.training.sysinfo.InfoService;
+import com.bcp.training.cpu.CpuStats;
+import com.bcp.training.cpu.CpuStatsService;
+import com.bcp.training.status.StatusService;
+import com.bcp.training.cpu.CpuPredictionService;
+import com.bcp.training.sysinfo.Info;
+import com.bcp.training.sysinfo.InfoService;
 
 
 @Path( "/" )
