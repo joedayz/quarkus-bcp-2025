@@ -79,5 +79,6 @@ curl http://localhost:8080/q/health
 ```
 
 Notes:
-- The image tag used is `expense-restful-service:latest`.
+- The image tag used in Kind is `localhost/expense-restful-service:latest` (Podman default). The script `scripts/build-and-load.sh` builds, tags, and loads both `expense-restful-service:latest` and `localhost/expense-restful-service:latest` into the `expense-kind` cluster.
+- The Deployment sets `imagePullPolicy: IfNotPresent` to use the locally loaded image.
 - The service is of type NodePort on 30080; `kind-config.yaml` maps it to localhost:8080.
