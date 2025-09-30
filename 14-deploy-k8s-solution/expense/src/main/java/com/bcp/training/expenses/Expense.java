@@ -1,4 +1,4 @@
-package com.redhat.training.expenses;
+package com.bcp.training.expenses;
 
 import java.math.BigDecimal;
 import java.util.Optional;

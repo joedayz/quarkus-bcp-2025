@@ -1,216 +1,84 @@
-# Expense RESTful Service - Kubernetes Agnóstico
+# expense-restful-service Project
 
-Este proyecto usa Quarkus, el Supersonic Subatomic Java Framework, y está configurado para ejecutarse en cualquier cluster de Kubernetes (Minikube, OKE, Docker Desktop, etc.).
+This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
-## 🚀 Despliegue Rápido (Windows 11)
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-### Para Docker Desktop Kubernetes (Recomendado para Windows)
-```powershell
-# Ejecutar en PowerShell como administrador
-.\scripts\deploy-docker-desktop.ps1
+## Running the application in dev mode
+
+You can run your application in dev mode that enables live coding using:
+```shell script
+./mvnw compile quarkus:dev
 ```
 
-### Para Minikube
-```powershell
-# Ejecutar en PowerShell
-.\scripts\deploy-minikube.ps1
+> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+
+## Packaging and running the application
+
+The application can be packaged using:
+```shell script
+./mvnw package
+```
+It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
+Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+
+The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+
+If you want to build an _über-jar_, execute the following command:
+```shell script
+./mvnw package -Dquarkus.package.type=uber-jar
 ```
 
-### Para Oracle Cloud Kubernetes Engine (OKE)
-```powershell
-# Configurar acceso a OKE primero
-oci ce cluster create-kubeconfig --cluster-id <tu-cluster-id>
+The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
 
-# Editar el script para configurar tu registry
-# Editar scripts/deploy-oke.ps1 y cambiar REGISTRY_URL
+## Creating a native executable
 
-# Desplegar en OKE
-.\scripts\deploy-oke.ps1
+You can create a native executable using: 
+```shell script
+./mvnw package -Pnative
 ```
 
-### Para cualquier cluster de Kubernetes
-```powershell
-.\scripts\build-and-deploy.ps1
+Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
+```shell script
+./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
-## 🧹 Limpieza
-```powershell
-.\scripts\cleanup.ps1
+You can then execute your native executable with: `./target/expense-restful-service-1.0.0-SNAPSHOT-runner`
+
+If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
+
+## Provided Code
+
+### RESTEasy JAX-RS
+
+Easily start your RESTful Web Services
+
+[Related guide section...](https://quarkus.io/guides/getting-started#the-jax-rs-resources)
+
+## Run on Kind with Podman
+
+The OpenShift `kubefiles/` remain unchanged. For Kind, use the manifests in `k8s/` and the helper scripts in `scripts/`.
+
+Prereqs: install Kind, Podman and kubectl. On macOS with Podman, ensure the Podman machine is running.
+
+1. Create the Kind cluster (Podman provider) and map host 8080 -> NodePort 30080:
+```bash
+./scripts/kind-up.sh
+```
+2. Build the JVM image with Podman and load it into the Kind cluster:
+```bash
+./scripts/build-and-load.sh
+```
+3. Deploy the app manifests for Kind:
+```bash
+./scripts/deploy-kind.sh
+```
+4. Test the service:
+```bash
+curl http://localhost:8080/q/health
 ```
 
-## 📁 Estructura del Proyecto
-
-```
-├── k8s/                    # Archivos de Kubernetes
-│   ├── namespace.yaml      # Namespace para la aplicación
-│   ├── configmap.yaml      # Configuraciones de la aplicación
-│   ├── deployment.yaml     # Deployment de la aplicación
-│   ├── service.yaml        # Service para exponer la aplicación
-│   ├── ingress.yaml        # Ingress para acceso externo
-│   ├── kustomization.yaml  # Gestión de recursos con Kustomize
-│   └── environments/       # Configuraciones específicas por entorno
-│       ├── minikube.yaml   # Configuración para Minikube
-│       └── docker-desktop.yaml # Configuración para Docker Desktop
-├── scripts/                # Scripts de automatización
-│   ├── *.ps1              # Scripts de PowerShell para Windows
-│   ├── *.sh               # Scripts de Bash (para WSL/Git Bash)
-│   ├── build-and-deploy.ps1 # Script general de despliegue
-│   ├── deploy-minikube.ps1  # Script específico para Minikube
-│   ├── deploy-docker-desktop.ps1 # Script para Docker Desktop
-│   ├── deploy-oke.ps1       # Script específico para OKE
-│   └── cleanup.ps1          # Script de limpieza
-├── Dockerfile              # Dockerfile optimizado para Kubernetes
-└── kubefiles/              # Archivos originales de OpenShift (legacy)
-```
-
-## 🔧 Configuración
-
-### Variables de Entorno
-- `EXPENSE_MAX_AMOUNT`: Monto máximo permitido para gastos (default: 2000)
-- `QUARKUS_DATASOURCE_DB_KIND`: Tipo de base de datos (default: h2)
-- `QUARKUS_DATASOURCE_JDBC_URL`: URL de conexión a la base de datos
-- `QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION`: Estrategia de generación de esquema
-
-### Recursos de Kubernetes
-- **Namespace**: `expense-app`
-- **Deployment**: `expense-app` con 1 réplica
-- **Service**: `expense-app-service` tipo ClusterIP
-- **Ingress**: `expense-app-ingress` para acceso externo
-
-## 🌐 Acceso a la Aplicación
-
-### Docker Desktop Kubernetes
-```powershell
-# Port-forward para acceso local
-kubectl port-forward svc/expense-app-service 8080:80 -n expense-app
-
-# Luego visita: http://localhost:8080
-```
-
-### Minikube
-La aplicación se abrirá automáticamente en tu navegador usando `minikube service`.
-
-### OKE u otros clusters
-```powershell
-# Port-forward para acceso local
-kubectl port-forward svc/expense-app-service 8080:80 -n expense-app
-
-# Luego visita: http://localhost:8080
-```
-
-## 🏥 Health Checks
-La aplicación incluye health checks configurados:
-- **Liveness Probe**: `/q/health/live`
-- **Readiness Probe**: `/q/health/ready`
-
-## 📊 Monitoreo
-```powershell
-# Ver logs de la aplicación
-kubectl logs -f deployment/expense-app -n expense-app
-
-# Ver estado de los pods
-kubectl get pods -n expense-app
-
-# Ver servicios
-kubectl get svc -n expense-app
-```
-
-## 🔄 Desarrollo Local
-
-### Ejecutar en modo desarrollo
-```powershell
-# Usando Maven Wrapper
-.\mvnw.cmd compile quarkus:dev
-
-# O usando Maven instalado
-mvn compile quarkus:dev
-```
-
-### Construir la aplicación
-```powershell
-.\mvnw.cmd clean package
-```
-
-### Construir imagen nativa
-```powershell
-.\mvnw.cmd package -Pnative
-```
-
-## 🖥️ Requisitos para Windows 11
-
-### Software Necesario
-1. **Docker Desktop** (con Kubernetes habilitado)
-   - Descargar desde: https://www.docker.com/products/docker-desktop
-   - Habilitar Kubernetes en Settings > Kubernetes
-
-2. **kubectl**
-   - Instalar con Chocolatey: `choco install kubernetes-cli`
-   - O descargar desde: https://kubernetes.io/docs/tasks/tools/
-
-3. **Maven** (opcional, se incluye Maven Wrapper)
-   - Instalar con Chocolatey: `choco install maven`
-
-4. **PowerShell 7** (recomendado)
-   - Instalar desde Microsoft Store o con winget
-
-### Configuración Inicial
-```powershell
-# Verificar que Docker Desktop esté corriendo
-docker info
-
-# Verificar que kubectl esté configurado
-kubectl config current-context
-
-# Verificar que Kubernetes esté disponible
-kubectl get nodes
-```
-
-## 📝 Notas Importantes
-
-1. **Registry de Imágenes**: Para OKE, necesitas configurar tu propio registry de OCI Container Registry
-2. **Ingress Controller**: Asegúrate de tener un Ingress Controller instalado en tu cluster
-3. **Persistencia**: La aplicación usa H2 en memoria. Para producción, considera usar una base de datos persistente
-4. **Seguridad**: Los pods se ejecutan como usuario no-root por seguridad
-5. **PowerShell Execution Policy**: Si tienes problemas ejecutando scripts, ejecuta:
-   ```powershell
-   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-   ```
-
-## 🆚 Diferencias con OpenShift
-
-| OpenShift | Kubernetes Agnóstico |
-|-----------|---------------------|
-| Route | Ingress |
-| ImageStream | Docker Image |
-| BuildConfig | Docker Build |
-| SecurityContext específico | SecurityContext estándar |
-
-## 🆘 Troubleshooting
-
-### Problemas comunes en Windows:
-1. **Imagen no encontrada**: Asegúrate de que la imagen esté construida y disponible
-2. **Ingress no funciona**: Verifica que tengas un Ingress Controller instalado
-3. **Pods no inician**: Revisa los logs con `kubectl logs`
-4. **Permisos**: Asegúrate de tener permisos para crear recursos en el namespace
-5. **Docker Desktop**: Verifica que Kubernetes esté habilitado en Docker Desktop
-6. **PowerShell**: Ejecuta PowerShell como administrador si hay problemas de permisos
-
-### Comandos útiles para debugging:
-```powershell
-# Verificar estado del cluster
-kubectl cluster-info
-
-# Verificar nodos
-kubectl get nodes
-
-# Verificar namespaces
-kubectl get namespaces
-
-# Verificar todos los recursos
-kubectl get all -n expense-app
-
-# Ver logs detallados
-kubectl describe pod <pod-name> -n expense-app
-```
-
-Para más información sobre Quarkus, visita: https://quarkus.io/
+Notes:
+- The image tag used in Kind is `localhost/expense-restful-service:latest` (Podman default). The script `scripts/build-and-load.sh` builds, tags, and loads both `expense-restful-service:latest` and `localhost/expense-restful-service:latest` into the `expense-kind` cluster.
+- The Deployment sets `imagePullPolicy: IfNotPresent` to use the locally loaded image.
+- The service is of type NodePort on 30080; `kind-config.yaml` maps it to localhost:8080.

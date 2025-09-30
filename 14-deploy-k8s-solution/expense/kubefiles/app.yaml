@@ -22,12 +22,12 @@ items:
           runAsNonRoot: true
         containers:
         - name: do378-expense
-          image: registry.ocp4.example.com:8443/developer/do378-expense
+          image: ''
           ports:
           - containerPort: 8080
           envFrom:
           - configMapRef:
-              name: 'expenses-config'
+              name: ''
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

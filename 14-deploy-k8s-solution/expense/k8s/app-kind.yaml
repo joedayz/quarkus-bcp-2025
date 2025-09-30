@@ -22,7 +22,8 @@ items:
           runAsNonRoot: true
         containers:
         - name: do378-expense
-          image: expense-restful-service:latest
+          image: localhost/expense-restful-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
           env:
