@@ -1,30 +1,43 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-if [ $# -lt 2 ]; then
-  echo 1>&2 "Usage: . $0 username password"
-  echo 1>&2 "  available users (username/password):"
-  echo 1>&2 "    user/redhat"
-  echo 1>&2 "    superuser/redhat"
-  exit 1
-fi
+# Function to get token
+get_token() {
+  local username="$1"
+  local password="$2"
+  
+  if [ -z "$username" ] || [ -z "$password" ]; then
+    echo 1>&2 "Usage: get_token username password"
+    echo 1>&2 "  available users (username/password):"
+    echo 1>&2 "    user/redhat"
+    echo 1>&2 "    superuser/redhat"
+    return 1
+  fi
 
-SERVER="http://localhost:8888/realms/quarkus/protocol/openid-connect/token"
-SECRET_ID="backend-service"
-SECRET_PW="secret"
-USER="$1"
-USER_PWD="$2"
+  local server="http://localhost:8888/realms/quarkus/protocol/openid-connect/token"
+  local secret_id="backend-service"
+  local secret_pw="secret"
 
-export TOKEN=$(curl --insecure -s -X POST "$SERVER" \
-  --user ${SECRET_ID}:${SECRET_PW} \
-  -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "username=${USER}" \
-  -d "password=${USER_PWD}" \
-  -d 'grant_type=password' \
-  | jq -r '.access_token')
+  echo "Getting token for user: $username" 1>&2
+  
+  export TOKEN=$(curl --insecure -s -X POST "$server" \
+    --user ${secret_id}:${secret_pw} \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "username=${username}" \
+    -d "password=${password}" \
+    -d 'grant_type=password' \
+    | jq --raw-output '.access_token'
+  )
 
+  if [[ "$TOKEN" == "null" ]] || [[ -z "$TOKEN" ]]; then
+      echo 1>&2 "Token was not retrieved! Review input parameters."
+      return 1
+  else
+      echo 1>&2 "Token successfully retrieved."
+      return 0
+  fi
+}
 
-if [[ "$TOKEN" == "null" ]] || [[ "$TOKEN" == ""  ]]; then
-    echo 1>&2 "Token was not retrieved! Review input parameters."
-else
-    echo 1>&2 "Token succesfuly retrieved."
+# If script is called directly (not sourced), call the function
+if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]]; then
+  get_token "$@"
 fi
