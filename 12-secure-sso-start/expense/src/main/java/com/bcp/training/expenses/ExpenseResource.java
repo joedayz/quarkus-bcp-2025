@@ -1,4 +1,5 @@
 package com.bcp.training.expenses;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ public class ExpenseResource {
         long numExpensesDeleted = Expense.delete( "uuid", uuid );
 
         if ( numExpensesDeleted == 0 ) {
-            throw new WebApplicationException( Response.Status.NOT_FOUND );
+            throw new WebApplicationException( Status.NOT_FOUND );
         }
 
         return Expense.listAll();

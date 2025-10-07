@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import io.restassured.http.ContentType;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
-
+import com.bcp.training.expenses.Expense.PaymentMethod;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -17,7 +17,7 @@ public class ExpenseCreationTest {
     @Test
     public void testCreateExpense() {
         given()
-                .body( Expense.of( "Test Expense", Expense.PaymentMethod.CASH, "2" ) )
+                .body( Expense.of( "Test Expense", PaymentMethod.CASH, "2" ) )
                 .contentType( ContentType.JSON )
                 .post();
 
@@ -29,7 +29,7 @@ public class ExpenseCreationTest {
                 .body( "size()", is( 1 ) )
                 .body(
                         containsString( "\"name\":\"Test Expense\"" ),
-                        containsString( "\"paymentMethod\":\"" + Expense.PaymentMethod.CASH + "\"" ),
+                        containsString( "\"paymentMethod\":\"" + PaymentMethod.CASH + "\"" ),
                         containsString( "\"amount\":2.0" ) );
 
     }

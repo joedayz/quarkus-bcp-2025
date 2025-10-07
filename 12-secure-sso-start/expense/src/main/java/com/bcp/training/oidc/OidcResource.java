@@ -14,7 +14,6 @@ import jakarta.ws.rs.core.MediaType;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.jboss.resteasy.reactive.NoCache;
 
-
 @Path( "/oidc" )
 @Consumes( MediaType.APPLICATION_JSON )
 @Produces( MediaType.APPLICATION_JSON )

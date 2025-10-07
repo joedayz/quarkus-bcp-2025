@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
-
+import com.bcp.training.expenses.Expense.PaymentMethod;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,6 +32,6 @@ public class ExpenseValidationTest {
     }
 
     private Expense givenExpenseWithAmount( BigDecimal amount ) {
-        return Expense.of( "Max amount expense", Expense.PaymentMethod.CREDIT_CARD, amount.toString() );
+        return Expense.of( "Max amount expense", PaymentMethod.CREDIT_CARD, amount.toString() );
     }
 }

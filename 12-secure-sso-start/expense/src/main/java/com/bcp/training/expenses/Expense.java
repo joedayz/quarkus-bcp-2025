@@ -1,15 +1,14 @@
 package com.bcp.training.expenses;
 
-import java.math.BigDecimal;
-import java.util.Optional;
-import java.util.UUID;
-
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import java.math.BigDecimal;
+import java.util.Optional;
+import java.util.UUID;
 
 @Entity
 public class Expense extends PanacheEntityBase {
