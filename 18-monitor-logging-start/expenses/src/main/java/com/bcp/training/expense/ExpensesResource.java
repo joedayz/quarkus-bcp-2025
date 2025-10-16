@@ -18,12 +18,12 @@ public class ExpensesResource {
     @GET
     @Path( "/{name}" )
     public Expense getByName( @PathParam( "name" ) String name ) {
-
+        Log.debug( "Getting expense by name: " + name );
         try {
             return expenses.getByName( name );
         } catch( ExpenseNotFoundException e ) {
             var message = e.getMessage();
-
+            Log.error( message );
             throw new NotFoundException( message );
         }
     }

@@ -1,0 +1,6 @@
+2025-10-15 21:11:31,780 WARN  [null] The "quarkus.log.file.enable" config property is deprecated and should not be used anymore.
+2025-10-15 21:11:31,899 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 1.168s. Listening on: http://localhost:8080
+2025-10-15 21:11:31,900 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-10-15 21:11:31,900 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-10-15 21:11:36,511 DEBUG [ExpensesResource.java] Getting expense by name: joel-2
+2025-10-15 21:20:36,882 INFO  [Timing.java] expenses stopped in 0.017s

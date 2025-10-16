@@ -2,22 +2,27 @@ package com.bcp.training;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import java.sql.SQLOutput;
 
 @ApplicationScoped
 public class ExpenseValidator {
 
-    @Inject
-    ExpenseConfiguration config;
+    boolean debug=true;
+    private static final int RANGE_HIGH = 1000;
+    private static final int RANGE_LOW = 250;
+
 
     public void debugRanges() {
-        config.debugMessage().ifPresent(System.out::println);
+        System.out.println("RANGE HIGH: " + RANGE_HIGH);
+        System.out.println("RANGE LOW: " + RANGE_LOW);
     }
 
     public boolean isValidAmount(int amount) {
-        if (config.debugEnabled()) {
+        if (debug) {
             debugRanges();
         }
-
-        return amount >= config.rangeLow() && amount <= config.rangeHigh();
+        return amount >= RANGE_LOW && amount <= RANGE_HIGH;
     }
 }
