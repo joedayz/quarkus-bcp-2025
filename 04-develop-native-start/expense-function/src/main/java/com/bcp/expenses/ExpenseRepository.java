@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-
+import com.bcp.expenses.Expense.PaymentMethod;
 
 @ApplicationScoped
 public class ExpenseRepository {
@@ -15,8 +15,8 @@ public class ExpenseRepository {
 
     public ExpenseRepository() {
         // Sample data
-        items.add( new Expense( "example-expense-1", Expense.PaymentMethod.CREDIT_CARD, "83" ) );
-        items.add( new Expense( "example-expense-21", Expense.PaymentMethod.CASH, "21" ) );
+        items.add( new Expense( "example-expense-1", PaymentMethod.CREDIT_CARD, "83" ) );
+        items.add( new Expense( "example-expense-21", PaymentMethod.CASH, "21" ) );
     }
 
     public void add( Expense expense ) {
