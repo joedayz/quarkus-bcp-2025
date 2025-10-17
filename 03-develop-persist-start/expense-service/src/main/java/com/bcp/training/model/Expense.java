@@ -38,13 +38,13 @@ public class Expense {
     // TODO: Add many-to-one relationship between expense and associate
     public Associate associate;
 
-     // TODO: Annotate the associateId with @Column
+    // TODO: Annotate the associateId with @Column
     public Long associateId;
 
     // TODO: Add a no-argument constructor
 
     public Expense(UUID uuid, String name, LocalDateTime creationDate,
-            PaymentMethod paymentMethod, String amount, Associate associate) {
+                   PaymentMethod paymentMethod, String amount, Associate associate) {
         this.uuid = uuid;
         this.name = name;
         this.creationDate = creationDate;
