@@ -18,51 +18,51 @@ public class CrudTest {
     @Order(1)
     public void initialListOfExpensesIsEmpty() {
         given()
-        .when()
-            .get()
-        .then()
-            .statusCode(200)
-            .body("$.size()", is(0));
+                .when()
+                .get()
+                .then()
+                .statusCode(200)
+                .body("$.size()", is(0));
     }
 
     @Test
     @Order(2)
     public void creatingAnExpenseReturns201WithHeaders() {
         given()
-            .body(
-                generateExpenseJson(
-                    "",
-                    "Expense 1",
-                    "CASH",
-                    1000
+                .body(
+                        generateExpenseJson(
+                                "",
+                                "Expense 1",
+                                "CASH",
+                                1000
+                        )
                 )
-            )
-            .contentType("application/json")
-        .when()
-            .post()
-        .then()
-            .statusCode(201)
-            .header("location", startsWith("http://"))
-            .header("uuid", notNullValue());
+                .contentType("application/json")
+                .when()
+                .post()
+                .then()
+                .statusCode(201)
+                .header("location", startsWith("http://"))
+                .header("uuid", notNullValue());
     }
 
     @Test
     @Order(3)
     public void updateNonExistingExpenseReturns404() {
         given()
-            .body(
-                    generateExpenseJson(
-                            NON_EXISTING_UUID,
-                            "Expense 1",
-                            "CASH",
-                           1000
-                    )
-            )
-            .contentType("application/json")
-        .when()
-            .put()
-        .then()
-            .statusCode(404);
+                .body(
+                        generateExpenseJson(
+                                NON_EXISTING_UUID,
+                                "Expense 1",
+                                "CASH",
+                                1000
+                        )
+                )
+                .contentType("application/json")
+                .when()
+                .put()
+                .then()
+                .statusCode(404);
     }
 
     @Test
@@ -71,12 +71,12 @@ public class CrudTest {
         // Getting the list of expenses
         Response expense = given()
                 .when()
-                    .get()
+                .get()
                 .then()
-                    .statusCode(200)
-                    .body("$.size()", is(1))
-                    .extract()
-                    .response();
+                .statusCode(200)
+                .body("$.size()", is(1))
+                .extract()
+                .response();
 
         // Extracting the UUID of the stored expense
         String expenseUuid = expense
@@ -92,29 +92,29 @@ public class CrudTest {
 
         // Updating the expense
         given()
-            .body(
-                generateExpenseJson(
-                    expenseUuid,
-                    "Expense 1",
-                    "CASH",
-                    newExpenseAmount
+                .body(
+                        generateExpenseJson(
+                                expenseUuid,
+                                "Expense 1",
+                                "CASH",
+                                newExpenseAmount
+                        )
                 )
-            )
-            .contentType("application/json")
-        .when()
-            .put()
-        .then()
-            .statusCode(204);
+                .contentType("application/json")
+                .when()
+                .put()
+                .then()
+                .statusCode(204);
 
         // Getting the updated list of expenses
         Response updatedExpense = given()
-        .when()
-            .get()
-        .then()
-            .statusCode(200)
-            .body("$.size()", is(1))
-            .extract()
-            .response();
+                .when()
+                .get()
+                .then()
+                .statusCode(200)
+                .body("$.size()", is(1))
+                .extract()
+                .response();
 
         // Extracting the UUID from the latest list
         String actualExpenseUuid = updatedExpense
@@ -135,11 +135,11 @@ public class CrudTest {
     @Order(4)
     public void deleteNonExistingExpenseReturns404() {
         given()
-            .pathParam("uuid", NON_EXISTING_UUID)
-        .when()
-            .delete("/{uuid}")
-        .then()
-            .statusCode(404);
+                .pathParam("uuid", NON_EXISTING_UUID)
+                .when()
+                .delete("/{uuid}")
+                .then()
+                .statusCode(404);
     }
 
     @Test
@@ -148,12 +148,12 @@ public class CrudTest {
         // Getting the list of expenses
         Response expense = given()
                 .when()
-                    .get()
+                .get()
                 .then()
-                    .statusCode(200)
-                    .body("$.size()", is(1))
-                    .extract()
-                    .response();
+                .statusCode(200)
+                .body("$.size()", is(1))
+                .extract()
+                .response();
 
         // Extracting the UUID of the stored expense
         String expenseUuid = expense
@@ -161,11 +161,11 @@ public class CrudTest {
                 .getString("[0].uuid");
 
         given()
-            .pathParam("uuid", expenseUuid)
-        .when()
-            .delete("/{uuid}")
-        .then()
-            .statusCode(204);
+                .pathParam("uuid", expenseUuid)
+                .when()
+                .delete("/{uuid}")
+                .then()
+                .statusCode(204);
     }
 
 

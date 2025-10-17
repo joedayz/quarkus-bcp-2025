@@ -10,6 +10,9 @@
         <option value="$PROJECT_DIR$/test-review/speaker/pom.xml" />
         <option value="$PROJECT_DIR$/test-review/schedule/pom.xml" />
         <option value="$PROJECT_DIR$/test-devservices/pom.xml" />
+        <option value="$PROJECT_DIR$/test-unit/expense-restful-service/pom.xml" />
+        <option value="$PROJECT_DIR$/test-mock/expenses-service/pom.xml" />
+        <option value="$PROJECT_DIR$/test-devservices/expense-service/pom.xml" />
       </list>
     </option>
   </component>

@@ -134,3 +134,4 @@ public class ExpenseResource {
         return uriInfo.getAbsolutePathBuilder().path("/{uuid}").build(expense.uuid);
     }
 }
+

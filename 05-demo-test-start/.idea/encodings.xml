@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/test-devservices/expense-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-devservices/expense-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-devservices/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-devservices/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-mock/expenses-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-mock/expenses-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-mock/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-mock/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-review/schedule/src/main/java" charset="UTF-8" />
@@ -11,6 +15,8 @@
     <file url="file://$PROJECT_DIR$/test-review/session/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-review/speaker/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-review/speaker/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-unit/expense-restful-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/test-unit/expense-restful-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-unit/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/test-unit/src/main/resources" charset="UTF-8" />
   </component>

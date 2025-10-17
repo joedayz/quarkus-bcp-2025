@@ -1,10 +1,7 @@
 package com.bcp.training.expenses;
 
-import org.junit.jupiter.api.Test;
 import io.quarkus.test.junit.QuarkusTest;
-
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
+import org.junit.jupiter.api.Test;
 
 @QuarkusTest
 public class ExpenseCreationTest {
