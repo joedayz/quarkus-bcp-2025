@@ -7,6 +7,9 @@
         <option value="$PROJECT_DIR$/session/session/pom.xml" />
         <option value="$PROJECT_DIR$/speaker/speaker/pom.xml" />
         <option value="$PROJECT_DIR$/schedule/schedule/pom.xml" />
+        <option value="$PROJECT_DIR$/speaker/pom.xml" />
+        <option value="$PROJECT_DIR$/session/pom.xml" />
+        <option value="$PROJECT_DIR$/schedule/pom.xml" />
       </list>
     </option>
   </component>

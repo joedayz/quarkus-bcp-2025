@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="schedule" />
+        <module name="microservices-speaker" />
+        <module name="microservice-schedule" />
+        <module name="microservice-session" />
         <module name="session" />
         <module name="speaker" />
       </profile>
@@ -14,6 +17,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="microservice-schedule" options="-parameters" />
+      <module name="microservice-session" options="-parameters" />
+      <module name="microservices-speaker" options="-parameters" />
       <module name="schedule" options="-parameters" />
       <module name="session" options="-parameters" />
       <module name="speaker" options="-parameters" />
