@@ -6,7 +6,6 @@ import jakarta.inject.Inject;
 
 @QuarkusMain
 public class ExpenseValidatorCli implements QuarkusApplication {
-
     @Inject
     ExpenseValidator validator;
 
@@ -15,6 +14,7 @@ public class ExpenseValidatorCli implements QuarkusApplication {
         if (args.length != 1) {
             throw new IllegalArgumentException("The command requires 1 argument");
         }
+
         try {
             int amountValue = Integer.parseInt(args[0]);
 
