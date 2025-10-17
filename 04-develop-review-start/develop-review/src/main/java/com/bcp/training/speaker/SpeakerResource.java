@@ -1,6 +1,7 @@
 package com.bcp.training.speaker;
 
 
+
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.*;
 import java.net.URI;
