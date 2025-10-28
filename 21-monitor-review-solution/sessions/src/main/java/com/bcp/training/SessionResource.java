@@ -27,6 +27,7 @@ public class SessionResource {
     SessionStore sessionStore;
 
     @GET
+    @Counted(value = "callsToGetSessions")
     public Collection<Session> getAllSessions() throws Exception {
         return sessionStore.findAll();
     }
