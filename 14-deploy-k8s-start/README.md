@@ -1,16 +1,25 @@
 ## Kind Demo: expense-service + expense-client
 
-Este directorio contiene una demo para Kind (Podman) que despliega dos microservicios:
+Este directorio contiene una demo para Kind que despliega dos microservicios:
 - expense-service: servicio REST de gastos
 - expense-client: cliente que consume expense-service
 
 Los scripts crean el cluster, construyen imágenes, las cargan y despliegan ambos componentes. La comunicación interna usa DNS con la variable EXPENSE_SVC.
 
-### Prerrequisitos
-- Kind y kubectl en PATH
-- Podman instalado y podman machine iniciado (macOS)
+### Versiones disponibles
 
-### Pasos
+Este proyecto incluye dos versiones de la demo:
+
+1. **Versión Podman** (directorio raíz): Usa Podman con kind. Los scripts están en `scripts/`.
+   - Requiere Podman instalado y podman machine iniciado (macOS)
+   - Usa `KIND_EXPERIMENTAL_PROVIDER=podman`
+
+2. **Versión Docker Desktop** (directorio `docker-desktop/`): Usa el Kubernetes integrado de Docker Desktop.
+   - Requiere Docker Desktop instalado y ejecutándose con Kubernetes habilitado
+   - Usa Docker para construir imágenes (no requiere kind)
+   - Ver [docker-desktop/README.md](docker-desktop/README.md) para instrucciones
+
+### Versión Podman - Pasos
 1) Levantar/validar el cluster
 ```bash
 scripts/kind-up.sh
