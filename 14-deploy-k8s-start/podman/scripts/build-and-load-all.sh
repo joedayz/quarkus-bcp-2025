@@ -2,7 +2,7 @@
 set -euo pipefail
 
 CLUSTER_NAME="expense-kind"
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 
 build_and_load() {
   local dir="$1"
