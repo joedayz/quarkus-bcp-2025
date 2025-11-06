@@ -4,3 +4,35 @@
 2025-10-15 21:11:31,900 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
 2025-10-15 21:11:36,511 DEBUG [ExpensesResource.java] Getting expense by name: joel-2
 2025-10-15 21:20:36,882 INFO  [Timing.java] expenses stopped in 0.017s
+2025-11-05 11:14:32,329 WARN  [null] The "quarkus.log.file.enable" config property is deprecated and should not be used anymore.
+2025-11-05 11:14:32,429 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 1.100s. Listening on: http://localhost:8080
+2025-11-05 11:14:32,430 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-11-05 11:14:32,430 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-11-05 11:16:33,449 INFO  [RuntimeUpdatesProcessor.java] File change detected: /Users/josediaz/Projects/bcp/quarkus-bcp-2025/18-monitor-logging-start/expenses/src/main/resources/application.properties
+2025-11-05 11:16:33,450 INFO  [RuntimeUpdatesProcessor.java] Restarting quarkus due to changes in application.properties, ExpensesResource.class.
+2025-11-05 11:16:33,455 INFO  [Timing.java] expenses stopped in 0.005s
+2025-11-05 11:16:33,661 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.205s. Listening on: http://localhost:8080
+2025-11-05 11:16:33,662 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-11-05 11:16:33,662 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-11-05 11:16:33,662 INFO  [RuntimeUpdatesProcessor.java] Live reload total time: 0.409s 
+2025-11-05 11:16:33,666 ERROR [ExpensesResource.java] Expense not found: none
+2025-11-05 11:17:21,324 INFO  [RuntimeUpdatesProcessor.java] Restarting quarkus due to changes in ExpensesResource.class.
+2025-11-05 11:17:21,327 INFO  [Timing.java] expenses stopped in 0.003s
+2025-11-05 11:17:21,523 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.195s. Listening on: http://localhost:8080
+2025-11-05 11:17:21,524 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-11-05 11:17:21,524 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-11-05 11:17:21,524 INFO  [RuntimeUpdatesProcessor.java] Live reload total time: 0.255s 
+2025-11-05 11:17:21,525 DEBUG [ExpensesResource.java] Getting expense by name: joel-2
+2025-11-05 11:17:42,135 INFO  [Timing.java] expenses stopped in 0.007s
+2025-11-05 11:17:53,125 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 1.121s. Listening on: http://localhost:8080
+2025-11-05 11:17:53,126 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-11-05 11:17:53,126 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-11-05 11:18:38,378 INFO  [RuntimeUpdatesProcessor.java] File change detected: /Users/josediaz/Projects/bcp/quarkus-bcp-2025/18-monitor-logging-start/expenses/src/main/resources/application.properties
+2025-11-05 11:18:38,379 INFO  [RuntimeUpdatesProcessor.java] Restarting quarkus due to changes in application.properties.
+2025-11-05 11:18:38,387 INFO  [Timing.java] expenses stopped in 0.007s
+2025-11-05 11:18:38,589 INFO  [Timing.java] expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.200s. Listening on: http://localhost:8080
+2025-11-05 11:18:38,589 INFO  [Timing.java] Profile dev activated. Live Coding activated.
+2025-11-05 11:18:38,589 INFO  [Timing.java] Installed features: [cdi, compose, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2025-11-05 11:18:38,589 INFO  [RuntimeUpdatesProcessor.java] Live reload total time: 0.212s 
+2025-11-05 11:18:38,590 DEBUG [ExpensesResource.java] Getting expense by name: joel-2
+2025-11-05 11:25:33,109 INFO  [Timing.java] expenses stopped in 0.016s

@@ -30,7 +30,7 @@ podman run --rm --name jaeger `
   -p 4318:4318 `
   -p 16686:16686 `
   -p 14268:14268 `
-  jaegertracing/all-in-one:1.5
+  jaegertracing/all-in-one:1.57
 
 # Check if the container started successfully
 if ($LASTEXITCODE -eq 0) {

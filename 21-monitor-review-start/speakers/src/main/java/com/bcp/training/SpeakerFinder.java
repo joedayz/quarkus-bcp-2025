@@ -2,6 +2,7 @@ package com.bcp.training;
 import java.util.List;
 import java.util.Optional;
 
+import io.opentelemetry.instrumentation.annotations.WithSpan;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import io.quarkus.logging.Log;
@@ -11,10 +12,11 @@ import io.quarkus.panache.common.Sort;
 @ApplicationScoped
 public class SpeakerFinder {
 
+    @WithSpan
     public List<Speaker> all() {
         Log.info( "Retrieving all speakers from database" );
 
-        runSlowAndRedundantOperation();
+        //runSlowAndRedundantOperation();
 
         return Speaker.listAll();
     }
