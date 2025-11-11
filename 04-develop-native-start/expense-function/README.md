@@ -64,3 +64,27 @@ If you want to learn more about building native executables, please consult <htt
 Easily start your REST Web Services
 
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+
+
+## Probando Dockerfile.native
+
+### Paso 1
+
+#false : usa tu graalvm o mandrel local
+#true : usa el native builder image: ubi-quarkus-mandrel-builder-image:jdk-21
+quarkus.native.container-build=true
+
+quarkus.native.container-runtime = podman
+
+# false: no crea la imagen contenerizada del ejecutable nativo
+# true: crea la imagen contenerizada del ejecutable nativo
+quarkus.container-image.build=true
+
+### Paso 2
+
+podman build -f src/main/docker/Dockerfile.native -t expense-function-native . 
+
+
+### Paso 3
+
+podman run -i --rm -p 8080:8080 expense-function-native 
