@@ -46,3 +46,20 @@ curl -X POST http://localhost:8080/expense \
 }'
 
 
+$token = (./get_token.ps1 user redhat)
+
+$headers = @{
+"Content-Type" = "application/json"
+"Authorization" = "Bearer $token"
+}
+
+$body = @{
+name = "Almuerzo"
+paymentMethod = "CREDIT_CARD"
+amount = 45.75
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri "http://localhost:8080/expense" `
+    -Method Post `
+-Headers $headers `
+-Body $body
