@@ -17,7 +17,7 @@ Este proyecto incluye dos versiones de la demo:
 2. **Versión Docker Desktop** (directorio `docker-desktop/`): Usa el Kubernetes integrado de Docker Desktop.
    - Requiere Docker Desktop instalado y ejecutándose con Kubernetes habilitado
    - Usa Docker para construir imágenes (no requiere kind)
-   - Ver [docker-desktop/README.md](docker-desktop/README.md) para instrucciones
+   - Ver [docker-desktop/README.md](../docker-desktop/README.md) para instrucciones
 
 ### Versión Podman - Pasos
 1) Levantar/validar el cluster
