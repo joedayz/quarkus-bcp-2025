@@ -15,6 +15,8 @@ Los scripts construyen las imágenes Docker y las despliegan usando el Kubernete
 **Nota**: No necesitas instalar kind - Docker Desktop incluye Kubernetes.
 
 ### Pasos
+
+**Linux/macOS:**
 1) Verificar que Docker Desktop Kubernetes esté disponible
 ```bash
 scripts/cluster-up.sh
@@ -27,7 +29,22 @@ scripts/build-and-load-all.sh
 ```bash
 scripts/deploy-all.sh
 ```
-4) Verificar y probar
+
+**Windows (PowerShell):**
+1) Verificar que Docker Desktop Kubernetes esté disponible
+```powershell
+.\scripts-windows\cluster-up.ps1
+```
+2) Construir las imágenes Docker
+```powershell
+.\scripts-windows\build-and-load-all.ps1
+```
+3) Desplegar ambos componentes
+```powershell
+.\scripts-windows\deploy-all.ps1
+```
+
+4) Verificar y probar (todos los sistemas)
 ```bash
 kubectl get pods
 kubectl get svc expense-service expense-client
@@ -47,8 +64,15 @@ Notas:
 
 ### Limpieza
 Eliminar los componentes de la demo:
+
+**Linux/macOS:**
 ```bash
 scripts/undeploy-all.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+.\scripts-windows\undeploy-all.ps1
 ```
 
 ### Acceso al servicio

@@ -20,6 +20,8 @@ Este proyecto incluye dos versiones de la demo:
    - Ver [docker-desktop/README.md](../docker-desktop/README.md) para instrucciones
 
 ### Versión Podman - Pasos
+
+**Linux/macOS:**
 1) Levantar/validar el cluster
 ```bash
 scripts/kind-up.sh
@@ -32,7 +34,22 @@ scripts/build-and-load-all.sh
 ```bash
 scripts/deploy-all-kind.sh
 ```
-4) Verificar y probar
+
+**Windows (PowerShell):**
+1) Levantar/validar el cluster
+```powershell
+.\scripts-windows\kind-up.ps1
+```
+2) Construir y cargar imágenes
+```powershell
+.\scripts-windows\build-and-load-all.ps1
+```
+3) Desplegar ambos componentes
+```powershell
+.\scripts-windows\deploy-all-kind.ps1
+```
+
+4) Verificar y probar (todos los sistemas)
 ```bash
 kubectl get pods
 kubectl get svc expense-service expense-client
@@ -45,8 +62,15 @@ Notas:
 
 ### Limpieza
 Eliminar los componentes de la demo:
+
+**Linux/macOS:**
 ```bash
 scripts/undeploy-all-kind.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+.\scripts-windows\undeploy-all-kind.ps1
 ```
 Reinicio completo (borra y recrea cluster):
 ```bash
