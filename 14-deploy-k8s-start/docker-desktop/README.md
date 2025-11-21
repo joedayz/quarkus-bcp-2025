@@ -16,7 +16,7 @@ Los scripts construyen las imágenes Docker y las despliegan usando el Kubernete
 
 ### Pasos
 
-**Usando scripts (Linux/macOS con shell):**
+**Linux/macOS (scripts bash):**
 1) Verificar que Docker Desktop Kubernetes esté disponible
 ```bash
 scripts/cluster-up.sh
@@ -30,7 +30,21 @@ scripts/build-and-load-all.sh
 scripts/deploy-all.sh
 ```
 
-**Usando comandos manuales (Windows, Linux sin desktop, o si los scripts no funcionan):**
+**Windows (scripts PowerShell):**
+1) Verificar que Docker Desktop Kubernetes esté disponible
+```powershell
+.\scripts-windows\cluster-up.ps1
+```
+2) Construir las imágenes Docker
+```powershell
+.\scripts-windows\build-and-load-all.ps1
+```
+3) Desplegar ambos componentes
+```powershell
+.\scripts-windows\deploy-all.ps1
+```
+
+**Comandos manuales (si los scripts no funcionan):**
 
 Ver [COMANDOS-MANUALES.md](COMANDOS-MANUALES.md) para instrucciones paso a paso con comandos que puedes ejecutar manualmente en cualquier sistema.
 
@@ -55,9 +69,14 @@ Notas:
 ### Limpieza
 Eliminar los componentes de la demo:
 
-**Con script:**
+**Linux/macOS:**
 ```bash
 scripts/undeploy-all.sh
+```
+
+**Windows:**
+```powershell
+.\scripts-windows\undeploy-all.ps1
 ```
 
 **Manual:**

@@ -21,7 +21,7 @@ Este proyecto incluye dos versiones de la demo:
 
 ### Versión Podman - Pasos
 
-**Usando scripts (Linux/macOS con shell):**
+**Linux/macOS (scripts bash):**
 1) Levantar/validar el cluster
 ```bash
 scripts/kind-up.sh
@@ -35,7 +35,21 @@ scripts/build-and-load-all.sh
 scripts/deploy-all-kind.sh
 ```
 
-**Usando comandos manuales (Windows, Linux sin desktop, o si los scripts no funcionan):**
+**Windows (scripts PowerShell):**
+1) Levantar/validar el cluster
+```powershell
+.\scripts-windows\kind-up.ps1
+```
+2) Construir y cargar imágenes
+```powershell
+.\scripts-windows\build-and-load-all.ps1
+```
+3) Desplegar ambos componentes
+```powershell
+.\scripts-windows\deploy-all-kind.ps1
+```
+
+**Comandos manuales (si los scripts no funcionan):**
 
 Ver [COMANDOS-MANUALES.md](COMANDOS-MANUALES.md) para instrucciones paso a paso con comandos que puedes ejecutar manualmente en cualquier sistema.
 
@@ -53,9 +67,14 @@ Notas:
 ### Limpieza
 Eliminar los componentes de la demo:
 
-**Con script:**
+**Linux/macOS:**
 ```bash
 scripts/undeploy-all-kind.sh
+```
+
+**Windows:**
+```powershell
+.\scripts-windows\undeploy-all-kind.ps1
 ```
 
 **Manual:**
