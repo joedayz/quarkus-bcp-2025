@@ -4,7 +4,13 @@ $ErrorActionPreference = "Stop"
 $CLUSTER_NAME = "expense-kind"
 $SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ROOT_DIR = Split-Path -Parent (Split-Path -Parent $SCRIPT_DIR)
-$CONFIG_DIR = Join-Path $ROOT_DIR "expense" ".kind" "kind-config.yaml"
+$CONFIG_FILE = Join-Path $ROOT_DIR "expense" ".kind" "kind-config.yaml"
+
+# Verificar que el archivo de configuración existe
+if (-not (Test-Path $CONFIG_FILE)) {
+    Write-Host "Archivo de configuración no encontrado: $CONFIG_FILE" -ForegroundColor Red
+    exit 1
+}
 
 # Verificar que kind esté instalado
 if (-not (Get-Command kind -ErrorAction SilentlyContinue)) {
@@ -24,9 +30,13 @@ if ($existingClusters -and ($existingClusters -split "`n" | Select-String -Patte
     Write-Host "Cluster ${CLUSTER_NAME} ya existe. Omitiendo creación."
 } else {
     $env:KIND_EXPERIMENTAL_PROVIDER = "podman"
-    kind create cluster --name $CLUSTER_NAME --config $CONFIG_DIR
+    # Convertir la ruta a formato absoluto y usar comillas para evitar problemas con puntos
+    $configPath = (Resolve-Path $CONFIG_FILE).Path
+    Write-Host "Creando cluster con configuración: $configPath" -ForegroundColor Cyan
+    & kind create cluster --name $CLUSTER_NAME --config "$configPath"
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error al crear el cluster" -ForegroundColor Red
+        Write-Host "Ruta de configuración usada: $configPath" -ForegroundColor Yellow
         exit 1
     }
 }
