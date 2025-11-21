@@ -4,7 +4,10 @@ $ErrorActionPreference = "Stop"
 $CLUSTER_NAME = "expense-kind"
 $SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ROOT_DIR = Split-Path -Parent (Split-Path -Parent $SCRIPT_DIR)
-$CONFIG_FILE = Join-Path $ROOT_DIR "expense" ".kind" "kind-config.yaml"
+# Join-Path solo acepta dos parámetros, construir la ruta paso a paso
+$expenseDir = Join-Path $ROOT_DIR "expense"
+$kindDir = Join-Path $expenseDir ".kind"
+$CONFIG_FILE = Join-Path $kindDir "kind-config.yaml"
 
 # Verificar que el archivo de configuración existe
 if (-not (Test-Path $CONFIG_FILE)) {
