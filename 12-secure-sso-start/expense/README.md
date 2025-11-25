@@ -1,3 +1,17 @@
+Obtener Token en Windows
+==========================
+.\get_token.ps1 user redhat
+
+.\get_token.ps1 superuser redhat
+
+echo $env:TOKEN
+
+Obtener Token en Mac o Linux
+==========================
+
+export TOKEN=$(./get_token.sh superuser redhat)
+
+echo $TOKEN
 
 Linux or MacosX
 ===============
@@ -17,24 +31,11 @@ $UUID = "3f1817f2-3dcf-472f-a8b2-77bfe25e79d1"
 Invoke-RestMethod -Uri "http://localhost:8080/expense/$uuid" -Method Delete -Headers @{ Authorization = "Bearer $env:TOKEN" }
 
 
-Obtener Token en Windows
-==========================
-.\get_token.ps1 user redhat
-
-.\get_token.ps1 superuser redhat
-
-echo $env:TOKEN
-
-Obtener Token en Mac o Linux
-==========================
-
-export TOKEN=$(./get_token.sh superuser redhat)
-
-echo $TOKEN
 
 
-Crear Expenses
-==============
+
+Crear Expenses en Linux o Mac
+===============================
 
 curl -X POST http://localhost:8080/expense \
 -H "Content-Type: application/json" \
@@ -45,6 +46,8 @@ curl -X POST http://localhost:8080/expense \
 "amount": 65.00
 }'
 
+Crear Expenses en Windows
+===============================
 
 $token = (./get_token.ps1 user redhat)
 
