@@ -14,10 +14,16 @@ if (-not (Get-Command kubectl -ErrorAction SilentlyContinue)) {
 }
 
 # Verificar que Docker Desktop esté ejecutándose
-$dockerInfo = docker info 2>$null
-if ($LASTEXITCODE -ne 0) {
-    Write-Host "Docker Desktop no está ejecutándose. Por favor, inicia Docker Desktop." -ForegroundColor Red
-    exit 1
+try {
+    $dockerInfo = docker info *>$null
+} catch {
+    $errorMsg = $_.Exception.Message
+    if ($errorMsg -like "*DOCKER_INSECURE_NO_IPTABLES_RAW*") {
+        Write-Host "Warning detectado, Docker sigue corriendo." -ForegroundColor Yellow
+    } else {
+        Write-Host "Docker Desktop no está ejecutándose. Por favor, inicia Docker Desktop." -ForegroundColor Red
+        exit 1
+    }
 }
 
 # Verificar que Kubernetes esté habilitado en Docker Desktop
@@ -34,4 +40,3 @@ kubectl cluster-info
 Write-Host ""
 $context = kubectl config current-context
 Write-Host "Contexto actual: $context" -ForegroundColor Cyan
-
