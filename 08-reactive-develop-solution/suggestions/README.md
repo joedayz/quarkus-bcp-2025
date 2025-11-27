@@ -1,78 +1,396 @@
-# suggestions
+# Reactive API - E-commerce Purchase Suggestions
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Este proyecto implementa una API reactiva para un sistema de sugerencias de compra en e-commerce. Utiliza Hibernate Reactive Panache y PostgreSQL para almacenar las sugerencias en una base de datos reactiva, mejorando el rendimiento y reduciendo la latencia.
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+## 📋 Requisitos Previos
 
-## Running the application in dev mode
+- **Java 21** o superior
+- **Maven 3.8+** o usar el wrapper incluido (`mvnw` / `mvnw.cmd`)
+- **Docker** o **Podman** (para ejecutar la base de datos PostgreSQL)
+- **Git** (opcional)
 
-You can run your application in dev mode that enables live coding using:
+## 🚀 Configuración del Proyecto
 
-```shell script
+### Paso 1: Navegar al directorio del proyecto
+
+#### Linux / macOS:
+```bash
+cd ~/08-reactive-develop-start/suggestions
+```
+
+#### Windows (PowerShell):
+```powershell
+cd 08-reactive-develop-start\suggestions
+```
+
+#### Windows (CMD):
+```cmd
+cd 08-reactive-develop-start\suggestions
+```
+
+### Paso 2: Agregar extensiones de Quarkus
+
+Agrega las extensiones necesarias para desarrollo reactivo:
+
+#### Linux / macOS:
+```bash
+./mvnw quarkus:add-extension -Dextensions="hibernate-reactive-panache,reactive-pg-client"
+```
+
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd quarkus:add-extension -Dextensions="hibernate-reactive-panache,reactive-pg-client"
+```
+
+#### Windows (CMD):
+```cmd
+mvnw.cmd quarkus:add-extension -Dextensions="hibernate-reactive-panache,reactive-pg-client"
+```
+
+**Nota:** Si tienes Maven instalado globalmente, puedes usar `mvn` en lugar de `./mvnw` o `.\mvnw.cmd`.
+
+### Paso 3: Configurar la base de datos
+
+Edita el archivo `src/main/resources/application.properties` y configura la imagen de PostgreSQL:
+
+```properties
+quarkus.datasource.devservices.image-name=postgres:14.1
+```
+
+O si estás usando un registro privado:
+
+```properties
+quarkus.datasource.devservices.image-name=registry.ocp4.example.com:8443/redhattraining/do378-postgres:14.1
+```
+
+## 🏃 Ejecutar la Aplicación
+
+### Modo Desarrollo (con recarga automática)
+
+#### Linux / macOS:
+```bash
 ./mvnw quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd quarkus:dev
 ```
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
+#### Windows (CMD):
+```cmd
+mvnw.cmd quarkus:dev
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
+La aplicación estará disponible en: `http://localhost:8080`
 
-## Creating a native executable
+### Modo de Pruebas Continuas
 
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
+#### Linux / macOS:
+```bash
+./mvnw quarkus:test
 ```
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd quarkus:test
 ```
 
-You can then execute your native executable with: `./target/suggestions-1.0.0-SNAPSHOT-runner`
+#### Windows (CMD):
+```cmd
+mvnw.cmd quarkus:test
+```
 
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
+Para detener el modo de pruebas continuas, presiona `q` en la terminal.
 
-## Related Guides
+### Ejecutar Pruebas Unitarias
 
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-- REST Jackson ([guide](https://quarkus.io/guides/rest#json-serialisation)): Jackson serialization support for Quarkus REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it
-- Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
+#### Linux / macOS:
+```bash
+./mvnw test
+```
 
-## Provided Code
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd test
+```
 
-### Hibernate ORM
+#### Windows (CMD):
+```cmd
+mvnw.cmd test
+```
 
-Create your first JPA entity
+## 🐳 Ejecutar con Docker
 
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
+### Requisitos
+- Docker instalado y en ejecución
 
-[Related Hibernate with Panache section...](https://quarkus.io/guides/hibernate-orm-panache)
+### Construir la aplicación
 
+#### Linux / macOS:
+```bash
+./mvnw clean package
+```
 
-### REST
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd clean package
+```
 
-Easily start your REST Web Services
+#### Windows (CMD):
+```cmd
+mvnw.cmd clean package
+```
 
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+### Construir la imagen Docker (JVM)
+
+#### Linux / macOS / Windows:
+```bash
+docker build -f src/main/docker/Dockerfile.jvm -t quarkus/suggestions-jvm .
+```
+
+### Ejecutar el contenedor
+
+#### Linux / macOS / Windows:
+```bash
+docker run -i --rm -p 8080:8080 quarkus/suggestions-jvm
+```
+
+### Construir imagen nativa (requiere más tiempo)
+
+#### Linux / macOS:
+```bash
+./mvnw clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+#### Windows (CMD):
+```cmd
+mvnw.cmd clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+Luego construir la imagen:
+
+```bash
+docker build -f src/main/docker/Dockerfile.native -t quarkus/suggestions-native .
+```
+
+Y ejecutar:
+
+```bash
+docker run -i --rm -p 8080:8080 quarkus/suggestions-native
+```
+
+## 🦫 Ejecutar con Podman
+
+### Requisitos
+- Podman instalado y en ejecución
+
+### Construir la aplicación
+
+#### Linux / macOS:
+```bash
+./mvnw clean package
+```
+
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd clean package
+```
+
+#### Windows (CMD):
+```cmd
+mvnw.cmd clean package
+```
+
+### Construir la imagen con Podman (JVM)
+
+#### Linux / macOS / Windows:
+```bash
+podman build -f src/main/docker/Dockerfile.jvm -t quarkus/suggestions-jvm .
+```
+
+### Ejecutar el contenedor
+
+#### Linux / macOS / Windows:
+```bash
+podman run -i --rm -p 8080:8080 quarkus/suggestions-jvm
+```
+
+### Construir imagen nativa con Podman
+
+#### Linux / macOS:
+```bash
+./mvnw clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+#### Windows (CMD):
+```cmd
+mvnw.cmd clean package -Dnative -Dquarkus.native.container-build=true
+```
+
+Luego construir la imagen:
+
+```bash
+podman build -f src/main/docker/Dockerfile.native -t quarkus/suggestions-native .
+```
+
+Y ejecutar:
+
+```bash
+podman run -i --rm -p 8080:8080 quarkus/suggestions-native
+```
+
+## 📝 Implementación de Endpoints
+
+### 1. Endpoint para crear sugerencias
+
+Agrega el siguiente método en `SuggestionResource.java`:
+
+```java
+@POST
+public Uni<Suggestion> create(Suggestion newSuggestion) {
+    return Panache.withTransaction(newSuggestion::persist);
+}
+```
+
+### 2. Endpoint para obtener sugerencia por ID
+
+```java
+@GET
+@Path("/{id}")
+public Uni<Suggestion> get(Long id) {
+    return Suggestion.findById(id);
+}
+```
+
+### 3. Endpoint para listar todas las sugerencias
+
+```java
+@GET
+public Multi<Suggestion> list() {
+    return Suggestion.streamAll();
+}
+```
+
+**Nota:** Asegúrate de importar las clases necesarias:
+- `io.smallrye.mutiny.Uni`
+- `io.smallrye.mutiny.Multi`
+- `jakarta.ws.rs.POST`
+- `jakarta.ws.rs.GET`
+- `jakarta.ws.rs.Path`
+- `io.quarkus.hibernate.reactive.panache.Panache`
+
+## 🔌 Endpoints de la API
+
+Una vez implementados los endpoints, la API expone:
+
+- **POST** `/suggestion` - Crea una nueva sugerencia
+- **GET** `/suggestion/{id}` - Obtiene una sugerencia por ID
+- **GET** `/suggestion` - Lista todas las sugerencias
+- **DELETE** `/suggestion` - Elimina todas las sugerencias
+
+### Ejemplos de uso
+
+#### Crear una sugerencia:
+```bash
+curl -X POST http://localhost:8080/suggestion \
+  -H "Content-Type: application/json" \
+  -d '{"clientId": 1, "itemId": 103}'
+```
+
+#### Obtener una sugerencia por ID:
+```bash
+curl http://localhost:8080/suggestion/1
+```
+
+#### Listar todas las sugerencias:
+```bash
+curl http://localhost:8080/suggestion
+```
+
+#### Eliminar todas las sugerencias:
+```bash
+curl -X DELETE http://localhost:8080/suggestion
+```
+
+## 🧪 Verificación
+
+El proyecto incluye tests que verifican el comportamiento de la aplicación. Ejecuta los tests para verificar que todo funciona correctamente:
+
+#### Linux / macOS:
+```bash
+./mvnw test
+```
+
+#### Windows (PowerShell):
+```powershell
+.\mvnw.cmd test
+```
+
+#### Windows (CMD):
+```cmd
+mvnw.cmd test
+```
+
+Todos los tests deben pasar después de implementar los endpoints correctamente.
+
+## 📦 Estructura del Proyecto
+
+```
+suggestions/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/bcp/training/
+│   │   │       ├── Suggestion.java          # Entidad Panache
+│   │   │       └── SuggestionResource.java  # Recurso REST
+│   │   ├── resources/
+│   │   │   └── application.properties       # Configuración
+│   │   └── docker/
+│   │       ├── Dockerfile.jvm               # Dockerfile para JVM
+│   │       └── Dockerfile.native            # Dockerfile para nativo
+│   └── test/
+│       └── java/
+│           └── com/bcp/training/
+│               └── SuggestionResourceTest.java  # Tests
+├── pom.xml
+├── mvnw                                    # Maven wrapper (Unix)
+└── mvnw.cmd                                # Maven wrapper (Windows)
+```
+
+## 🔧 Solución de Problemas
+
+### Error: "Cannot find Maven"
+Si no tienes Maven instalado, usa el wrapper incluido (`mvnw` o `mvnw.cmd`).
+
+### Error: "Port 8080 already in use"
+Cambia el puerto en `application.properties`:
+```properties
+quarkus.http.port=8081
+```
+
+### Error: "Database connection failed"
+Asegúrate de que Docker o Podman estén ejecutándose y que la imagen de PostgreSQL esté configurada correctamente en `application.properties`.
+
+### Problemas con Docker en Windows
+Asegúrate de que Docker Desktop esté ejecutándose y que WSL2 esté habilitado si es necesario.
+
+## 📚 Recursos Adicionales
+
+- [Quarkus Documentation](https://quarkus.io/guides/)
+- [Hibernate Reactive](https://quarkus.io/guides/hibernate-reactive)
+- [Mutiny Documentation](https://smallrye.io/smallrye-mutiny/)
+
+## 📄 Licencia
+
+Este proyecto es parte de un curso de entrenamiento BCP.
