@@ -12,11 +12,11 @@ import io.quarkus.panache.common.Sort;
 @ApplicationScoped
 public class SpeakerFinder {
 
-    @WithSpan
+    //@WithSpan
     public List<Speaker> all() {
         Log.info( "Retrieving all speakers from database" );
 
-        //runSlowAndRedundantOperation();
+        runSlowAndRedundantOperation();
 
         return Speaker.listAll();
     }
