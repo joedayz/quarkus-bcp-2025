@@ -14,7 +14,7 @@ Esta guía contiene los comandos para ejecutar manualmente la demo con Podman y 
 ```bash
 # Desde el directorio raíz del proyecto (14-deploy-k8s-start)
 export CLUSTER_NAME="expense-kind"
-export CONFIG_DIR="$(pwd)/expense/.kind/kind-config.yaml"
+export CONFIG_DIR="$(pwd)/.kind/kind-config.yaml"
 
 # Verificar que kind y podman estén instalados
 kind version
