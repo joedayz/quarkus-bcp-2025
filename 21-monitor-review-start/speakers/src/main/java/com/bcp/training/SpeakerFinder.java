@@ -9,10 +9,10 @@ import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Sort;
 
 
+
 @ApplicationScoped
 public class SpeakerFinder {
 
-    //@WithSpan
     public List<Speaker> all() {
         Log.info( "Retrieving all speakers from database" );
 
