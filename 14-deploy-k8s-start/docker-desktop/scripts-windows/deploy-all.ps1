@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 $SCRIPT_DIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ROOT_DIR = Split-Path -Parent $SCRIPT_DIR
-$APP_MANIFEST = Join-Path $ROOT_DIR "k8s" "expenses-all.yaml"
+$APP_MANIFEST = Join-Path (Join-Path $ROOT_DIR "k8s") "expenses-all.yaml"
 
 kubectl apply -f $APP_MANIFEST
 if ($LASTEXITCODE -ne 0) {
@@ -39,4 +39,3 @@ if ($serviceIp) {
     Write-Host "  kubectl port-forward svc/expense-client 8081:8080" -ForegroundColor Cyan
     Write-Host "Luego accede en http://localhost:8081" -ForegroundColor Cyan
 }
-
