@@ -41,7 +41,7 @@ mvn io.quarkus:quarkus-maven-plugin:3.2.9.Final:create ^
   -DprojectGroupId=com.bcp.training ^
   -DprojectArtifactId=tenther ^
   -DplatformVersion=3.2.9.Final ^
-  -Dextensions="quarkus-rest easy"
+  -Dextensions="quarkus-resteasy"
 ```
 
 ### Windows (PowerShell)
@@ -51,7 +51,7 @@ mvn io.quarkus:quarkus-maven-plugin:3.2.9.Final:create `
   -DprojectGroupId=com.bcp.training `
   -DprojectArtifactId=tenther `
   -DplatformVersion=3.2.9.Final `
-  -Dextensions="quarkus-rest easy"
+  -Dextensions="quarkus-resteasy"
 ```
 
 **Alternativa (una sola línea para Windows):**
