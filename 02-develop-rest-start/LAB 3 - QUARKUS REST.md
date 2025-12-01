@@ -382,7 +382,30 @@ Invoke-WebRequest -Uri http://localhost:8090/expenses -Method POST -Body $body -
 
 ## 11. Configurar las propiedades de imagen de contenedor
 
-### 11.1. Actualiza expense-service/application.properties
+### 11.1. Verifica (o agrega) la extensión `container-image-jib`
+
+En el módulo `expense-client`, asegúrate de que el proyecto tenga la extensión `container-image-jib`.  
+Si fuera necesario agregarla, ejecuta:
+
+### Linux/Mac
+
+```bash
+mvn quarkus:add-extension -Dextensions=container-image-jib
+```
+
+### Windows (CMD)
+
+```cmd
+mvn quarkus:add-extension -Dextensions=container-image-jib
+```
+
+### Windows (PowerShell)
+
+```powershell
+mvn quarkus:add-extension -Dextensions=container-image-jib
+```
+
+### 11.2. Actualiza expense-service/application.properties
 
 Abre `expense-service/src/main/resources/application.properties` y reemplaza los valores `TODO`:
 
@@ -394,7 +417,7 @@ quarkus.container-image.group=quay.io
 quarkus.container-image.name=expense-service
 ```
 
-### 11.2. Actualiza expense-client/application.properties
+### 11.3. Actualiza expense-client/application.properties
 
 Abre `expense-client/src/main/resources/application.properties` y reemplaza los valores `TODO`:
 
@@ -453,6 +476,107 @@ mvn clean package -Dquarkus.container-image.build=true
 mvn clean package -Dquarkus.container-image.build=true
 ```
 
+## 13. Verificar las imágenes con Podman o Docker
+
+Una vez ejecutado el `mvn clean package` con `-Dquarkus.container-image.build=true`, se crean las imágenes de contenedor.
+
+### 13.1. Listar las imágenes
+
+#### Podman (Linux/Mac/Windows)
+
+```bash
+podman images | grep expense
+```
+
+#### Docker (Linux/Mac/Windows)
+
+```bash
+docker images | grep expense
+```
+
+## 14. Probar los contenedores con Podman o Docker
+
+### 14.1. Crear una red para los microservicios
+
+#### Podman
+
+```bash
+podman network create expense-net
+```
+
+#### Docker
+
+```bash
+docker network create expense-net
+```
+
+### 14.2. Iniciar el contenedor `expense-service`
+
+#### Podman
+
+```bash
+podman run --rm --name expense-service -d --network expense-net quay.io/expense-service:1.0.0-SNAPSHOT
+```
+
+#### Docker
+
+```bash
+docker run --rm --name expense-service -d --network expense-net quay.io/expense-service:1.0.0-SNAPSHOT
+```
+
+### 14.3. Iniciar el contenedor `expense-client`
+
+El cliente necesita una variable de entorno para indicar la URL del servicio.  
+Usa el siguiente comando (ajusta la versión de la imagen si es necesario):
+
+#### Podman
+
+```bash
+podman run --rm --name expense-client -d \
+  -e QUARKUS_REST_CLIENT__COM_BCP_TRAINING_CLIENT_EXPENSESERVICECLIENT__URL="http://expense-service:8080" \
+  -p 8090:8090 \
+  --network expense-net \
+  quay.io/expense-client:1.0.0-SNAPSHOT
+```
+
+#### Docker
+
+```bash
+docker run --rm --name expense-client -d \
+  -e QUARKUS_REST_CLIENT__COM_BCP_TRAINING_CLIENT_EXPENSESERVICECLIENT__URL="http://expense-service:8080" \
+  -p 8090:8090 \
+  --network expense-net \
+  quay.io/expense-client:1.0.0-SNAPSHOT
+```
+
+### 14.4. Probar la aplicación desde el navegador
+
+Abre tu navegador y navega a:
+
+- `http://localhost:8090` para probar la aplicación `expense-client`.
+
+## 15. Detener y eliminar los contenedores
+
+### 15.1. Con Podman
+
+```bash
+podman stop -a
+```
+
+Como los contenedores se ejecutaron con `--rm`, se eliminarán automáticamente al detenerse.
+
+### 15.2. Con Docker
+
+```bash
+docker stop expense-client expense-service
+```
+
+Si quieres eliminarlos explícitamente:
+
+```bash
+docker rm expense-client expense-service
+```
+
 ## Resumen
 
 En este laboratorio has aprendido a:
@@ -475,4 +599,5 @@ En este laboratorio has aprendido a:
 **Enjoy!**
 
 **Joe**
+
 
