@@ -1,17 +1,69 @@
-# LAB 4: QUARKUS PERSISTENT - SOLUCIÓN
+# LAB 4: QUARKUS PERSISTENT
 
 **Autor:** José Díaz  
 **Github Repo:** https://github.com/joedayz/quarkus-bcp-2025.git
 
 ## Objetivo
 
-Este documento contiene la solución completa del laboratorio 4 sobre persistencia con Hibernate ORM y Panache en Quarkus.
+En este laboratorio aprenderás a:
+- Configurar Hibernate ORM con Panache en Quarkus
+- Crear entidades JPA usando PanacheEntity
+- Establecer relaciones entre entidades (OneToMany, ManyToOne)
+- Configurar PostgreSQL con Dev Services
+- Implementar operaciones CRUD usando métodos de Panache
+- Agregar paginación y ordenamiento
+- Usar transacciones en métodos REST
 
-## Solución Completa
+## 1. Cargar en su IDE el proyecto 03-develop-persist-start
 
-### 1. Dependencias en `pom.xml`
+Abre el proyecto en tu IDE preferido. El proyecto contiene:
+- `expense-service`: Servicio REST que gestiona gastos con persistencia
 
-El archivo `pom.xml` incluye las siguientes dependencias:
+## 2. Examinar la estructura del proyecto
+
+### 2.1. Módulo expense-service
+
+El módulo `expense-service` contiene:
+- `Expense`: Modelo de datos que representa un gasto (actualmente sin persistencia)
+- `Associate`: Modelo de datos que representa un asociado (actualmente sin persistencia)
+- `ExpenseResource`: Recurso REST con operaciones CRUD (incompleto)
+
+## 3. Agregar dependencias de Hibernate ORM y PostgreSQL
+
+### 3.1. Abre el archivo `pom.xml`
+
+Ubicado en: `expense-service/pom.xml`
+
+### 3.2. Agrega las dependencias necesarias
+
+Puedes agregar las extensiones usando el comando de Quarkus (como se muestra en las imágenes) **o** agregando manualmente las dependencias al `pom.xml`.
+
+#### 3.2.1. Usando el comando `quarkus:add-extension`
+
+##### Linux/Mac
+
+```bash
+./mvnw quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+./mvnw quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+##### Windows (CMD)
+
+```cmd
+mvnw.cmd quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+mvnw.cmd quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+##### Windows (PowerShell)
+
+```powershell
+.\mvnw.cmd quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+.\mvnw.cmd quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+#### 3.2.2. Agregando las dependencias manualmente en el `pom.xml`
+
+Agrega las siguientes dependencias dentro del elemento `<dependencies>`:
 
 ```xml
 <dependency>
@@ -32,33 +84,70 @@ El archivo `pom.xml` incluye las siguientes dependencias:
 </dependency>
 ```
 
-### 2. Configuración en `application.properties`
+**Resultado esperado:** El archivo `pom.xml` debe incluir estas dependencias junto con las existentes.
+
+## 4. Configurar la base de datos
+
+### 4.1. Abre el archivo `application.properties`
+
+Ubicado en: `expense-service/src/main/resources/application.properties`
+
+### 4.2. Agrega la configuración de la base de datos
+
+Reemplaza el comentario `# TODO: Add configuration` con:
 
 ```properties
-quarkus.swagger-ui.always-include=true
-quarkus.swagger-ui.enable=true
-
 quarkus.datasource.devservices.image-name=postgres:14.1
 quarkus.hibernate-orm.database.generation=drop-and-create
 ```
 
-### 3. Clase `Associate.java` - Solución Completa
+**Explicación:**
+- `quarkus.datasource.devservices.image-name`: Especifica la imagen de PostgreSQL para Dev Services
+- `quarkus.hibernate-orm.database.generation=drop-and-create`: Crea y recrea el esquema de base de datos al iniciar
+
+## 5. Convertir Associate en una entidad JPA
+
+### 5.1. Abre la clase `Associate`
+
+Ubicada en: `expense-service/src/main/java/com/bcp/training/model/Associate.java`
+
+### 5.2. Agrega la anotación `@Entity` y extiende `PanacheEntity`
 
 ```java
-package com.bcp.training.model;
+@Entity
+public class Associate extends PanacheEntity {
+```
 
-import java.util.List;
-import java.util.ArrayList;
+### 5.3. Agrega la relación OneToMany con Expense
 
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+Agrega las anotaciones necesarias al campo `expenses`:
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+```java
+@JsonbTransient
+@OneToMany(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+public List<Expense> expenses = new ArrayList<>();
+```
 
+**Nota:** Necesitarás importar:
+- `jakarta.persistence.Entity`
+- `jakarta.persistence.OneToMany`
+- `jakarta.persistence.CascadeType`
+- `jakarta.persistence.FetchType`
+- `jakarta.json.bind.annotation.JsonbTransient`
+- `io.quarkus.hibernate.orm.panache.PanacheEntity`
+
+### 5.4. Agrega un constructor sin argumentos
+
+Agrega el constructor requerido por JPA:
+
+```java
+public Associate() {
+}
+```
+
+**Resultado esperado:**
+
+```java
 @Entity
 public class Associate extends PanacheEntity {
     public String name;
@@ -81,220 +170,220 @@ public class Associate extends PanacheEntity {
 }
 ```
 
-**Puntos clave:**
-- Extiende `PanacheEntity` para obtener métodos CRUD automáticos
-- `@Entity` marca la clase como entidad JPA
-- `@OneToMany` establece la relación uno-a-muchos con `Expense`
-- `@JsonbTransient` evita la serialización circular en JSON
-- Constructor sin argumentos requerido por JPA
+## 6. Convertir Expense en una entidad JPA
 
-### 4. Clase `Expense.java` - Solución Completa
+### 6.1. Abre la clase `Expense`
+
+Ubicada en: `expense-service/src/main/java/com/bcp/training/model/Expense.java`
+
+### 6.2. Agrega la anotación `@Entity` y extiende `PanacheEntity`
 
 ```java
-package com.bcp.training.model;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.UUID;
-import java.util.Optional;
-
-import jakarta.json.bind.annotation.JsonbCreator;
-import jakarta.json.bind.annotation.JsonbDateFormat;
-import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotNull;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.Response;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
 @Entity
 public class Expense extends PanacheEntity {
-
-    public enum PaymentMethod {
-        CASH, CREDIT_CARD, DEBIT_CARD,
-    }
-
-    @NotNull
-    public UUID uuid;
-    public String name;
-
-    @JsonbDateFormat(value = "yyyy-MM-dd HH:mm:ss")
-    public LocalDateTime creationDate;
-    public PaymentMethod paymentMethod;
-    public BigDecimal amount;
-
-    @JsonbTransient
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "associate_id", insertable = false, updatable = false)
-    public Associate associate;
-
-    @Column(name = "associate_id")
-    public Long associateId;
-
-    public Expense() {
-    }
-
-    public Expense(UUID uuid, String name, LocalDateTime creationDate,
-                   PaymentMethod paymentMethod, String amount, Associate associate) {
-        this.uuid = uuid;
-        this.name = name;
-        this.creationDate = creationDate;
-        this.paymentMethod = paymentMethod;
-        this.amount = new BigDecimal(amount);
-        this.associate = associate;
-        this.associateId = associate.id;
-    }
-
-    public Expense(String name, PaymentMethod paymentMethod, String amount, Associate associate) {
-        this(UUID.randomUUID(), name, LocalDateTime.now(), paymentMethod, amount, associate);
-    }
-
-    @JsonbCreator
-    public static Expense of(String name, PaymentMethod paymentMethod, String amount, Long associateId) {
-        return Associate.<Associate>findByIdOptional(associateId)
-                .map(associate -> new Expense(name, paymentMethod, amount, associate))
-                .orElseThrow(RuntimeException::new);
-    }
-
-    public static void update(final Expense expense) throws RuntimeException {
-        Optional<Expense> previousExpense = Expense.findByIdOptional(expense.id);
-
-        previousExpense.ifPresentOrElse( updatedExpense -> {
-            updatedExpense.uuid = expense.uuid;
-            updatedExpense.name = expense.name;
-            updatedExpense.amount = expense.amount;
-            updatedExpense.paymentMethod = expense.paymentMethod;
-            updatedExpense.persist();
-        }, () -> {
-            throw new WebApplicationException( Response.Status.NOT_FOUND );
-        });
-    }
-}
 ```
 
-**Puntos clave:**
-- Extiende `PanacheEntity` para obtener métodos CRUD automáticos
-- `@Entity` marca la clase como entidad JPA
-- `@ManyToOne` establece la relación muchos-a-uno con `Associate`
-- `@Column(name = "associate_id")` mapea el campo a la columna de la base de datos
-- `@JoinColumn` configura la columna de unión (solo lectura)
-- Método estático `update()` para actualizar entidades existentes
-- Método `of()` busca el `Associate` antes de crear el `Expense`
+### 6.3. Agrega la relación ManyToOne con Associate
 
-### 5. Clase `ExpenseResource.java` - Solución Completa
+Agrega las anotaciones necesarias al campo `associate`:
 
 ```java
-package com.bcp.training.rest;
+@JsonbTransient
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "associate_id", insertable = false, updatable = false)
+public Associate associate;
+```
 
-import java.util.List;
-import java.util.UUID;
+### 6.4. Anota el campo `associateId` con `@Column`
 
-import com.bcp.training.model.Expense;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.WebApplicationException;
-import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.DefaultValue;
+```java
+@Column(name = "associate_id")
+public Long associateId;
+```
 
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.panache.common.Page;
-import io.quarkus.panache.common.Sort;
+### 6.5. Agrega un constructor sin argumentos
 
-@Path("/expenses")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-public class ExpenseResource {
+```java
+public Expense() {
+}
+```
 
-    @GET
-    public List<Expense> list(@DefaultValue("5") @QueryParam("pageSize") int pageSize,
-                              @DefaultValue("1") @QueryParam("pageNum") int pageNum) {
-        PanacheQuery<Expense> expenseQuery = Expense.findAll(
-                Sort.by("amount").and("associateId"));
+### 6.6. Actualiza el constructor para asociar `associateId`
 
-        return expenseQuery.page(Page.of(pageNum - 1, pageSize)).list();
-    }
+En el constructor que recibe un `Associate`, agrega:
 
-    @POST
-    @Transactional
-    public Expense create(final Expense expense) {
-        Expense newExpense = Expense.of(expense.name, expense.paymentMethod,
-                expense.amount.toString(), expense.associateId);
-        newExpense.persist();
+```java
+this.associateId = associate.id;
+```
 
-        return newExpense;
-    }
+### 6.7. Actualiza el método `of()` para buscar el Associate
 
-    @DELETE
-    @Path("{uuid}")
-    @Transactional
-    public void delete(@PathParam("uuid") final UUID uuid) {
-        long numExpensesDeleted = Expense.delete("uuid", uuid);
+Reemplaza el método `of()` con:
 
-        if (numExpensesDeleted == 0) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
-    }
+```java
+@JsonbCreator
+public static Expense of(String name, PaymentMethod paymentMethod, String amount, Long associateId) {
+    return Associate.<Associate>findByIdOptional(associateId)
+            .map(associate -> new Expense(name, paymentMethod, amount, associate))
+            .orElseThrow(RuntimeException::new);
+}
+```
 
-    @PUT
-    @Transactional
-    public void update(final Expense expense) {
-        try {
-            Expense.update(expense);
-        } catch (RuntimeException e) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
-        }
+### 6.8. Agrega el método `update()`
+
+Agrega el siguiente método estático:
+
+```java
+public static void update(final Expense expense) throws RuntimeException {
+    Optional<Expense> previousExpense = Expense.findByIdOptional(expense.id);
+
+    previousExpense.ifPresentOrElse( updatedExpense -> {
+        updatedExpense.uuid = expense.uuid;
+        updatedExpense.name = expense.name;
+        updatedExpense.amount = expense.amount;
+        updatedExpense.paymentMethod = expense.paymentMethod;
+        updatedExpense.persist();
+    }, () -> {
+        throw new WebApplicationException( Response.Status.NOT_FOUND );
+    });
+}
+```
+
+**Nota:** Necesitarás importar:
+- `jakarta.persistence.Entity`
+- `jakarta.persistence.ManyToOne`
+- `jakarta.persistence.JoinColumn`
+- `jakarta.persistence.Column`
+- `jakarta.persistence.FetchType`
+- `io.quarkus.hibernate.orm.panache.PanacheEntity`
+
+**Resultado esperado:** La clase `Expense` debe extender `PanacheEntity` y tener todas las anotaciones JPA necesarias.
+
+## 7. Implementar el ExpenseResource
+
+### 7.1. Abre la clase `ExpenseResource`
+
+Ubicada en: `expense-service/src/main/java/com/bcp/training/rest/ExpenseResource.java`
+
+### 7.2. Implementa el método `list()` con paginación y ordenamiento
+
+Reemplaza el método `list()` con:
+
+```java
+@GET
+public List<Expense> list(@DefaultValue("5") @QueryParam("pageSize") int pageSize,
+                          @DefaultValue("1") @QueryParam("pageNum") int pageNum) {
+    PanacheQuery<Expense> expenseQuery = Expense.findAll(
+            Sort.by("amount").and("associateId"));
+
+    return expenseQuery.page(Page.of(pageNum - 1, pageSize)).list();
+}
+```
+
+**Nota:** Necesitarás importar:
+- `io.quarkus.hibernate.orm.panache.PanacheQuery`
+- `io.quarkus.panache.common.Page`
+- `io.quarkus.panache.common.Sort`
+
+### 7.3. Haz el método `create()` transaccional y persiste la entidad
+
+```java
+@POST
+@Transactional
+public Expense create(final Expense expense) {
+    Expense newExpense = Expense.of(expense.name, expense.paymentMethod,
+            expense.amount.toString(), expense.associateId);
+    newExpense.persist();
+
+    return newExpense;
+}
+```
+
+### 7.4. Implementa el método `delete()` con transacción
+
+```java
+@DELETE
+@Path("{uuid}")
+@Transactional
+public void delete(@PathParam("uuid") final UUID uuid) {
+    long numExpensesDeleted = Expense.delete("uuid", uuid);
+
+    if (numExpensesDeleted == 0) {
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
     }
 }
 ```
 
-**Puntos clave:**
-- `@Transactional` en métodos que modifican datos (POST, PUT, DELETE)
-- `Expense.findAll()` con `Sort` para ordenamiento
-- `PanacheQuery.page()` para paginación
-- `Expense.persist()` para crear nuevas entidades
-- `Expense.delete()` para eliminar por campo
-- `Expense.update()` método estático personalizado
+### 7.5. Implementa el método `update()` con transacción
 
-## Probar la Solución
+```java
+@PUT
+@Transactional
+public void update(final Expense expense) {
+    try {
+        Expense.update(expense);
+    } catch (RuntimeException e) {
+        throw new WebApplicationException(Response.Status.NOT_FOUND);
+    }
+}
+```
 
-### 1. Iniciar la aplicación
+## 8. Iniciar la aplicación
+
+### 8.1. Navega al directorio expense-service
 
 ### Linux/Mac
 
 ```bash
 cd expense-service
-./mvnw quarkus:dev
 ```
 
 ### Windows (CMD)
 
 ```cmd
 cd expense-service
-mvnw.cmd quarkus:dev
 ```
 
 ### Windows (PowerShell)
 
 ```powershell
 cd expense-service
+```
+
+### 8.2. Inicia la aplicación en modo desarrollo
+
+### Linux/Mac
+
+```bash
+./mvnw quarkus:dev
+```
+
+### Windows (CMD)
+
+```cmd
+mvnw.cmd quarkus:dev
+```
+
+### Windows (PowerShell)
+
+```powershell
 .\mvnw.cmd quarkus:dev
 ```
 
-### 2. Listar gastos con paginación
+**Nota:** La primera vez que ejecutes la aplicación, Quarkus Dev Services iniciará automáticamente un contenedor PostgreSQL.
+
+### 8.3. Verifica que la aplicación esté corriendo
+
+Abre tu navegador y visita:
+- **Swagger UI**: http://localhost:8080/q/swagger-ui
+- **OpenAPI JSON**: http://localhost:8080/q/openapi
+- **Dev UI**: http://localhost:8080/q/dev/
+
+Deberías ver los endpoints disponibles en Swagger UI.
+
+## 9. Probar los endpoints
+
+### 9.1. Listar todos los gastos con paginación
 
 ### Linux/Mac
 
@@ -314,7 +403,9 @@ curl "http://localhost:8080/expenses?pageSize=5&pageNum=1"
 Invoke-WebRequest -Uri "http://localhost:8080/expenses?pageSize=5&pageNum=1" -Method GET | Select-Object -ExpandProperty Content
 ```
 
-### 3. Crear un nuevo gasto
+**Resultado esperado:** Deberías ver un array JSON con los gastos inicializados desde `import.sql`, ordenados por `amount` y `associateId`.
+
+### 9.2. Crear un nuevo gasto
 
 ### Linux/Mac
 
@@ -343,9 +434,11 @@ $body = @{
 Invoke-WebRequest -Uri http://localhost:8080/expenses -Method POST -Body $body -ContentType "application/json" | Select-Object -ExpandProperty Content
 ```
 
-### 4. Actualizar un gasto
+**Resultado esperado:** Deberías recibir el objeto JSON del gasto creado con un `id` generado.
 
-Primero, obtén el UUID y el ID de un gasto existente. Luego:
+### 9.3. Actualizar un gasto
+
+Primero, obtén el UUID de un gasto existente. Luego:
 
 ### Linux/Mac
 
@@ -376,7 +469,7 @@ $body = @{
 Invoke-WebRequest -Uri http://localhost:8080/expenses -Method PUT -Body $body -ContentType "application/json"
 ```
 
-### 5. Eliminar un gasto
+### 9.4. Eliminar un gasto
 
 ### Linux/Mac
 
@@ -396,68 +489,62 @@ curl -X DELETE http://localhost:8080/expenses/<UUID_DEL_GASTO>
 Invoke-WebRequest -Uri "http://localhost:8080/expenses/<UUID_DEL_GASTO>" -Method DELETE
 ```
 
-## Verificar la Base de Datos
+## 10. Verificar la base de datos
 
-### Consultar los gastos
+### 10.1. Acceder a la base de datos PostgreSQL
 
-```sql
-SELECT * FROM Expense ORDER BY amount, associate_id;
+Quarkus Dev Services expone la base de datos en el puerto 5432. Puedes conectarte usando cualquier cliente PostgreSQL.
+
+### 10.2. Consultar las tablas
+
+Puedes usar `psql` o cualquier herramienta gráfica:
+
+### Linux/Mac
+
+```bash
+psql -h localhost -p 5432 -U quarkus -d quarkus
 ```
 
-### Consultar los asociados
+### Windows (PowerShell)
+
+```powershell
+# Si tienes psql instalado
+psql -h localhost -p 5432 -U quarkus -d quarkus
+```
+
+**Nota:** La contraseña por defecto es `quarkus`.
+
+### 10.3. Consultar los gastos
+
+```sql
+SELECT * FROM Expense;
+```
+
+### 10.4. Consultar los asociados
 
 ```sql
 SELECT * FROM Associate;
 ```
 
-### Consultar gastos con información del asociado
-
-```sql
-SELECT e.id, e.name, e.amount, a.name as associate_name 
-FROM Expense e 
-JOIN Associate a ON e.associate_id = a.id;
-```
-
-## Conceptos Clave Aprendidos
-
-### PanacheEntity
-
-- Proporciona métodos estáticos como `findAll()`, `findById()`, `persist()`, `delete()`
-- Incluye un campo `id` automático (Long)
-- Simplifica el código de persistencia
-
-### Relaciones JPA
-
-- **@OneToMany**: Un asociado tiene muchos gastos
-- **@ManyToOne**: Muchos gastos pertenecen a un asociado
-- **@JoinColumn**: Especifica la columna de unión en la base de datos
-
-### Transacciones
-
-- `@Transactional` asegura que las operaciones se ejecuten en una transacción
-- Si ocurre un error, se revierte toda la transacción
-
-### Dev Services
-
-- Inicia automáticamente PostgreSQL en un contenedor
-- No requiere configuración manual de la base de datos
-- Solo disponible en modo desarrollo
-
-### Paginación y Ordenamiento
-
-- `PanacheQuery` permite encadenar operaciones
-- `Page.of()` crea una página con índice y tamaño
-- `Sort.by()` permite ordenar por múltiples campos
-
 ## Resumen
 
-Esta solución implementa:
-- ✅ Entidades JPA con PanacheEntity
-- ✅ Relaciones OneToMany y ManyToOne
-- ✅ Operaciones CRUD completas
-- ✅ Paginación y ordenamiento
-- ✅ Transacciones en métodos REST
-- ✅ Configuración de PostgreSQL con Dev Services
+En este laboratorio has aprendido a:
+- ✅ Configurar Hibernate ORM con Panache en Quarkus
+- ✅ Crear entidades JPA extendiendo `PanacheEntity`
+- ✅ Establecer relaciones entre entidades (OneToMany, ManyToOne)
+- ✅ Configurar PostgreSQL con Dev Services
+- ✅ Implementar operaciones CRUD usando métodos de Panache (`persist()`, `delete()`, `findAll()`)
+- ✅ Agregar paginación y ordenamiento a las consultas
+- ✅ Usar `@Transactional` en métodos REST
+- ✅ Usar `import.sql` para datos iniciales
+
+## Próximos pasos
+
+- Explora más métodos de Panache como `find()`, `findBy()`, `count()`
+- Implementa consultas personalizadas con `@NamedQuery`
+- Agrega validación usando Bean Validation
+- Implementa repositorios personalizados con PanacheRepository
+- Explora las capacidades de Dev Services para otras bases de datos
 
 ---
 

@@ -36,6 +36,33 @@ Ubicado en: `expense-service/pom.xml`
 
 ### 3.2. Agrega las dependencias necesarias
 
+Puedes agregar las extensiones usando el comando de Quarkus (como se muestra en las imágenes) **o** agregando manualmente las dependencias al `pom.xml`.
+
+#### 3.2.1. Usando el comando `quarkus:add-extension`
+
+##### Linux/Mac
+
+```bash
+./mvnw quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+./mvnw quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+##### Windows (CMD)
+
+```cmd
+mvnw.cmd quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+mvnw.cmd quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+##### Windows (PowerShell)
+
+```powershell
+.\mvnw.cmd quarkus:add-extension -Dextensions="hibernate-orm-panache,jdbc-postgresql"
+.\mvnw.cmd quarkus:add-extension -Dextensions="hibernate-validator"
+```
+
+#### 3.2.2. Agregando las dependencias manualmente en el `pom.xml`
+
 Agrega las siguientes dependencias dentro del elemento `<dependencies>`:
 
 ```xml
