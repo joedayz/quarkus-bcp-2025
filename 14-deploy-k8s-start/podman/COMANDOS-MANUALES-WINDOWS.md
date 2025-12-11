@@ -229,3 +229,4 @@ kind delete cluster --name "expense-kind"
 - Estos comandos son equivalentes a lo que hacen los scripts de `scripts-windows` (`kind-up.ps1`, `build-and-load-all.ps1`, `deploy-all-kind.ps1`, `undeploy-all-kind.ps1`), pero "desglosados" paso a paso.
 
 
+
