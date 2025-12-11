@@ -1,4 +1,4 @@
-# Laboratorio: Reactive EDA con Quarkus y Kafka
+# LAB 12 - QUARKUS REACTIVE MESSAGING
 
 ## Descripción General
 
@@ -18,7 +18,7 @@ https://github.com/joedayz/quarkus-bcp-2025.git
 
 - Java 17 o superior
 - Maven 3.8+
-- Docker y Docker Compose (para Kafka)
+- Docker y Docker Compose **O** Podman y Podman Compose (para Kafka)
 - Un editor de código (VS Code, IntelliJ IDEA, etc.)
 
 ## Estructura del Proyecto
@@ -30,17 +30,102 @@ El proyecto contiene dos servicios principales:
 
 ---
 
+## Configuración Inicial: Infraestructura (Kafka y PostgreSQL)
+
+### Iniciar los Contenedores
+
+Antes de comenzar con los servicios, necesitas iniciar Kafka y PostgreSQL usando Docker Compose o Podman Compose.
+
+#### Opción 1: Usando Docker Compose
+
+**Windows (PowerShell/CMD):**
+```powershell
+cd joedayz-bank
+docker-compose up -d
+```
+
+**Linux/Mac:**
+```bash
+cd joedayz-bank
+docker-compose up -d
+```
+
+#### Opción 2: Usando Podman Compose
+
+**Windows (PowerShell/CMD):**
+```powershell
+cd joedayz-bank
+podman-compose up -d
+```
+
+**Linux/Mac:**
+```bash
+cd joedayz-bank
+podman-compose up -d
+```
+
+### Verificar que los Contenedores Están Corriendo
+
+#### Docker:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+docker ps
+```
+
+#### Podman:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+podman ps
+```
+
+Deberías ver contenedores corriendo para:
+- `joedayz-postgres` (PostgreSQL en puerto 5432)
+- `joedayz-zookeeper` (Zookeeper en puerto 2181)
+- `joedayz-kafka` (Kafka en puerto 9092)
+- `joedayz-kafka-ui` (Kafka UI opcional en puerto 9080)
+
+### Detener los Contenedores (al finalizar el laboratorio)
+
+#### Docker:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
+docker-compose down
+```
+
+#### Podman:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
+podman-compose down
+```
+
+---
+
 ## Parte 1: Configuración del Servicio joedayz-bank
 
 ### 1. Abrir el Proyecto
 
-1.1. En una terminal, navega al directorio del proyecto:
+#### 1.1. Navegar al Directorio del Proyecto
 
+**Windows (PowerShell):**
+```powershell
+cd joedayz-bank
+```
+
+**Windows (CMD):**
+```cmd
+cd joedayz-bank
+```
+
+**Linux/Mac:**
 ```bash
 cd joedayz-bank
 ```
 
-1.2. Abre el proyecto con tu editor y examina los archivos:
+#### 1.2. Examinar los Archivos
+
+Abre el proyecto con tu editor y examina los archivos:
 
 - La clase **com.bcp.training.model.BankAccount** es una entidad Panache que modela una cuenta bancaria.
 - La clase **com.bcp.training.resource.BankAccountsResource** expone dos REST endpoints. Uno para obtener todas las cuentas de la base de datos, y otra que crea nuevas cuentas bancarias.
@@ -49,8 +134,7 @@ cd joedayz-bank
 
 #### 2.1. Agregar la Extensión de Kafka
 
-Retorna a la terminal y usa el comando Maven para instalar la extensión `quarkus-messaging-kafka`:
-
+**Windows (PowerShell/CMD), Linux, Mac:**
 ```bash
 mvn quarkus:add-extension -Dextensions=quarkus-messaging-kafka
 ```
@@ -263,8 +347,7 @@ public Uni<Void> processNewBankAccountEvents(BankAccountWasCreated event) {
 
 #### 5.4. Iniciar la Aplicación
 
-Retorna a la terminal de Windows y usa el comando Maven para iniciar la aplicación:
-
+**Windows (PowerShell/CMD), Linux, Mac:**
 ```bash
 mvn quarkus:dev
 ```
@@ -285,8 +368,19 @@ Listening on: http://localhost:8080
 
 Abre una nueva terminal y navega al directorio del proyecto:
 
+**Windows (PowerShell):**
+```powershell
+cd ..\fraud-detector
+```
+
+**Windows (CMD):**
+```cmd
+cd ..\fraud-detector
+```
+
+**Linux/Mac:**
 ```bash
-cd ~/09-reactive-eda-start/fraud-detector
+cd ../fraud-detector
 ```
 
 #### 6.2. Examinar los Archivos
@@ -366,8 +460,7 @@ public CompletionStage<Void> sendEventNotifications(Message<BankAccountWasCreate
 
 #### 7.4. Iniciar la Aplicación
 
-Abre la terminal de Windows, y luego usa el comando Maven para iniciar la aplicación:
-
+**Windows (PowerShell/CMD), Linux, Mac:**
 ```bash
 mvn quarkus:dev
 ```
@@ -469,10 +562,36 @@ En este laboratorio has aprendido a:
 
 ### Kafka no está disponible
 
-Asegúrate de que Kafka esté corriendo. Puedes usar Docker Compose:
+Asegúrate de que Kafka esté corriendo. Puedes usar Docker Compose o Podman Compose:
 
+#### Docker Compose:
 ```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
 docker-compose up -d
+```
+
+#### Podman Compose:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
+podman-compose up -d
+```
+
+### Verificar el Estado de los Contenedores
+
+#### Docker:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+docker ps
+docker logs joedayz-kafka
+```
+
+#### Podman:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+podman ps
+podman logs joedayz-kafka
 ```
 
 ### Puerto ya en uso
@@ -490,9 +609,27 @@ Verifica que:
 - Los canales estén correctamente configurados en `application.properties`
 - Los deserializers estén correctamente implementados
 
+### Limpiar Contenedores y Volúmenes
+
+Si necesitas empezar desde cero:
+
+#### Docker:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
+docker-compose down -v
+docker-compose up -d
+```
+
+#### Podman:
+```bash
+# Windows (PowerShell/CMD), Linux, Mac
+cd joedayz-bank
+podman-compose down -v
+podman-compose up -d
+```
+
 ---
 
 **Autor:** Jose Diaz  
 **Academia:** JOEDAYZ academy
-
-
