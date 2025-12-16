@@ -249,9 +249,14 @@ Agrega este método:
 ```java
 @GET
 public Multi<Suggestion> list() {
-    return Suggestion.streamAll();
+    return Panache.withSession(() -> Suggestion.<Suggestion>listAll())
+            .onItem().transformToMulti(list -> Multi.createFrom().iterable(list));
 }
 ```
+
+**Notas importantes:**
+- En Hibernate Reactive Panache, no existe el método `streamAll()`. Debemos usar `listAll()` que retorna `Uni<List<Suggestion>>` y luego convertirlo a `Multi<Suggestion>` usando `transformToMulti()`.
+- **CRÍTICO:** Los métodos que retornan `Multi` y acceden a la base de datos **DEBEN** usar `Panache.withSession()` para abrir una sesión de Hibernate Reactive. Las anotaciones `@WithSession` y `@WithTransaction` solo funcionan con métodos que retornan `Uni`, no `Multi`.
 
 ### Paso 9: Verificar el Código Completo
 
@@ -289,7 +294,8 @@ public class SuggestionResource {
 
     @GET
     public Multi<Suggestion> list() {
-        return Suggestion.streamAll();
+        return Panache.withSession(() -> Suggestion.<Suggestion>listAll())
+                .onItem().transformToMulti(list -> Multi.createFrom().iterable(list));
     }
 
     @DELETE
@@ -823,7 +829,48 @@ wsl --list --verbose
 mvnw.cmd test -X
 ```
 
-### Problema 7: Error "PanacheEntity not found"
+### Problema 7: Error "Cannot resolve method 'streamAll' in 'Suggestion'"
+
+**Causa:** En Hibernate Reactive Panache, no existe el método `streamAll()`. Solo están disponibles métodos como `listAll()`, `findById()`, etc.
+
+**Solución:** Usa `listAll()` y convierte el resultado a `Multi`:
+
+```java
+@GET
+public Multi<Suggestion> list() {
+    return Suggestion.<Suggestion>listAll()
+            .onItem().transformToMulti(list -> Multi.createFrom().iterable(list));
+}
+```
+
+### Problema 8: Error "No current Mutiny.Session found"
+
+**Causa:** Los métodos que retornan `Multi` y acceden a la base de datos necesitan una sesión de Hibernate Reactive, pero no está disponible.
+
+**Solución:** Usa `Panache.withSession()` en lugar de anotaciones:
+
+```java
+@GET
+public Multi<Suggestion> list() {
+    return Panache.withSession(() -> Suggestion.<Suggestion>listAll())
+            .onItem().transformToMulti(list -> Multi.createFrom().iterable(list));
+}
+```
+
+### Problema 9: Error "@WithSession must return Uni" o "@WithTransaction must return Uni"
+
+**Causa:** Las anotaciones `@WithSession` y `@WithTransaction` solo funcionan con métodos que retornan `Uni`, no `Multi`.
+
+**Solución:** 
+- Para métodos que retornan `Multi` (como `list()`), usa `Panache.withSession()` en lugar de `@WithSession`
+- Para métodos que retornan `Uni` y necesitan transacción, usa `Panache.withTransaction()` o `@WithTransaction`
+- Para métodos que retornan `Uni` y solo necesitan sesión (lectura), puedes usar `@WithSession` o simplemente confiar en la sesión automática de JAX-RS
+
+**Resumen:**
+- `@WithSession` / `@WithTransaction` → Solo para métodos que retornan `Uni`
+- `Panache.withSession()` / `Panache.withTransaction()` → Para métodos que retornan `Multi` o cuando necesitas control explícito
+
+### Problema 10: Error "PanacheEntity not found"
 
 **Solución:** Verifica que la extensión `hibernate-reactive-panache` esté agregada:
 
@@ -831,7 +878,7 @@ mvnw.cmd test -X
 ./mvnw quarkus:add-extension -Dextensions="hibernate-reactive-panache"
 ```
 
-### Problema 8: Error al construir imagen Docker/Podman
+### Problema 11: Error al construir imagen Docker/Podman
 
 **Solución 1:** Asegúrate de haber construido la aplicación primero:
 
@@ -905,7 +952,7 @@ En este laboratorio has aprendido a:
 - **Modo Desarrollo:** Usa `quarkus:dev` para desarrollo con recarga automática
 - **Dev Services:** Quarkus automáticamente inicia PostgreSQL en un contenedor cuando detecta la extensión
 - **Mutiny:** `Uni` representa un valor único asíncrono, `Multi` representa un stream de valores
-- **Panache:** Simplifica las operaciones de base de datos con métodos como `persist()`, `findById()`, `streamAll()`
+- **Panache:** Simplifica las operaciones de base de datos con métodos como `persist()`, `findById()`, `listAll()`. Para obtener un `Multi`, convierte `listAll()` usando `transformToMulti()`
 - **Contenedores:** Las imágenes nativas ofrecen mejor rendimiento pero requieren más tiempo de compilación
 
 ---
