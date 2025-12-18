@@ -1,0 +1,131 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: expense-client-config
+  data:
+    EXPENSE_SVC: http://expense-service:8080
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: expense-service
+    labels:
+      app: expense-service
+  spec:
+    selector:
+      matchLabels:
+        app: expense-service
+    template:
+      metadata:
+        labels:
+          app: expense-service
+      spec:
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+          runAsNonRoot: true
+        containers:
+        - name: expense-service
+          image: ${ACR_NAME}.azurecr.io/expense-service:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: expense-service
+    labels:
+      app: expense-service
+  spec:
+    selector:
+      app: expense-service
+    ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: expense-client
+    labels:
+      app: expense-client
+  spec:
+    selector:
+      matchLabels:
+        app: expense-client
+    template:
+      metadata:
+        labels:
+          app: expense-client
+      spec:
+        securityContext:
+          seccompProfile:
+            type: RuntimeDefault
+          runAsNonRoot: true
+        containers:
+        - name: expense-client
+          image: ${ACR_NAME}.azurecr.io/expense-client:latest
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          envFrom:
+          - configMapRef:
+              name: expense-client-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: expense-client
+    labels:
+      app: expense-client
+  spec:
+    selector:
+      app: expense-client
+    type: LoadBalancer
+    ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
