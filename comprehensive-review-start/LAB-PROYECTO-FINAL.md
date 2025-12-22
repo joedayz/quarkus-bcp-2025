@@ -19,6 +19,42 @@ Asegúrate de tener instalado:
 - Maven 3.8 o superior
 - Python 3 (para ejecutar el frontend)
 - Docker o Podman (para contenedores)
+- OpenSSL (para generar claves JWT)
+
+### Checklist de Extensiones Requeridas
+
+Asegúrate de que el proyecto incluya todas estas extensiones:
+
+**Extensiones Core:**
+- `quarkus-hibernate-orm-panache` - ORM con Panache
+- `quarkus-jdbc-postgresql` - Driver PostgreSQL
+- `quarkus-rest` - Framework REST
+- `quarkus-rest-jackson` - Serialización JSON (servidor)
+- `quarkus-rest-client` - Cliente REST
+- `quarkus-rest-client-jackson` - **IMPORTANTE:** Serialización JSON (cliente REST)
+
+**Extensiones de Seguridad y Salud:**
+- `quarkus-smallrye-openapi` - OpenAPI/Swagger
+- `quarkus-smallrye-health` - Health checks
+- `quarkus-smallrye-jwt-build` - Generación JWT
+- `quarkus-smallrye-jwt` - Verificación JWT
+
+**Extensiones de Mensajería y Resiliencia:**
+- `quarkus-messaging-kafka` - Integración Kafka
+- `quarkus-smallrye-fault-tolerance` - Tolerancia a fallos
+
+**Extensiones de Métricas:**
+- `quarkus-micrometer-registry-prometheus` - Métricas Prometheus
+
+### Configuraciones Críticas
+
+Antes de ejecutar, verifica:
+
+1. **Claves JWT:** Los archivos `privateKey.pem` y `publicKey.pem` deben existir en `src/main/resources/`
+2. **Base de Datos:** El archivo `import.sql` debe tener `status = 0` para parques abiertos
+3. **Entidad Park:** Debe incluir el campo `size` de tipo `Integer`
+4. **Cliente REST:** Debe tener `quarkus-rest-client-jackson` en las dependencias
+5. **Timeouts:** Deben estar en milisegundos (números), no en formato de duración
 
 ## Preparación del Entorno
 
@@ -184,14 +220,14 @@ Asegúrate de ejecutar `mvn test`. El script de evaluación verifica que el info
 **Usando Quarkus CLI (Linux/Mac):**
 ```bash
 quarkus create app com.redhat.smartcity:parks \
-  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt \
+  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-rest-client-jackson,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt,quarkus-smallrye-fault-tolerance \
   --no-code
 ```
 
 **Usando Quarkus CLI (Windows PowerShell):**
 ```powershell
 quarkus create app com.redhat.smartcity:parks `
-  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt `
+  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-rest-client-jackson,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt,quarkus-smallrye-fault-tolerance `
   --no-code
 ```
 
@@ -200,9 +236,11 @@ quarkus create app com.redhat.smartcity:parks `
 mvn io.quarkus.platform:quarkus-maven-plugin:3.26.0:create \
   -DprojectGroupId=com.redhat.smartcity \
   -DprojectArtifactId=parks \
-  -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt" \
+  -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-rest-client-jackson,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt,quarkus-smallrye-fault-tolerance" \
   -DnoCode
 ```
+
+**Nota importante:** La extensión `quarkus-rest-client-jackson` es necesaria para que el cliente REST pueda deserializar respuestas JSON. La extensión `quarkus-smallrye-fault-tolerance` también se incluye desde el inicio.
 
 1.2. Navega al directorio del proyecto:
 
@@ -249,6 +287,21 @@ Copy-Item ..\materials\import.sql src\main\resources\
 copy ..\materials\import.sql src\main\resources\
 ```
 
+2.3. **IMPORTANTE:** Verifica que el archivo `import.sql` tenga el campo `size` y que el `status` use `0` para OPEN (no `1`):
+
+El archivo debe verse así:
+```sql
+INSERT INTO
+    park(id, name, city, status, size)
+VALUES
+    (1, 'Vondelpark', 'Amsterdam', 0, 800),
+    (2, 'Parc du Cinquantenaire', 'Brussels', 0, 700),
+    (3, 'Parque Ibirapuera', 'São Paulo', 0, 1000),
+    (4, 'Parc Güell', 'Barcelona', 0, 500);
+```
+
+**Nota:** El valor `0` corresponde a `OPEN` y `1` corresponde a `CLOSED` porque Hibernate mapea los enums por ordinal.
+
 ### Paso 3: Crear la Entidad Park
 
 3.1. Crea la entidad `Park` en `src/main/java/com/redhat/smartcity/Park.java`:
@@ -264,6 +317,7 @@ public class Park extends PanacheEntity {
     public String name;
     public String city;
     public Status status;
+    public Integer size;
 
     public enum Status {
         OPEN, CLOSED
@@ -357,7 +411,7 @@ public class ParksResource {
 
 ```properties
 # CORS Configuration
-quarkus.http.cors=true
+quarkus.http.cors.enabled =true
 quarkus.http.cors.origins=http://localhost:9000
 ```
 
@@ -378,9 +432,12 @@ quarkus.smallrye-openapi.info-version=1.0.0
 ```java
 package com.redhat.smartcity.weather;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.util.List;
@@ -391,16 +448,28 @@ public interface WeatherService {
     
     @GET
     @Path("/{city}")
-    List<WeatherWarning> getWarningsByCity(@PathParam("city") String city);
+    @Produces(MediaType.APPLICATION_JSON)
+    Uni<List<WeatherWarning>> getWarningsByCity(@PathParam("city") String city);
 }
 ```
+
+**Nota importante:** 
+- El método devuelve `Uni<List<WeatherWarning>>` para soportar programación reactiva
+- Se agrega `@Produces(MediaType.APPLICATION_JSON)` para especificar el tipo de contenido
 
 7.2. Configura el cliente REST en `application.properties`:
 
 ```properties
 # Weather Service REST Client Configuration
-weather-api/mp-rest/url=http://localhost:8090
+# URL del servicio weather (por defecto localhost:8090)
+# Puedes sobrescribir con variables de entorno: WEATHER_ENDPOINT y WEATHER_PORT
+quarkus.rest-client.weather-api.url=http://${WEATHER_ENDPOINT:localhost}:${WEATHER_PORT:8090}
+# Timeouts en milisegundos (5000ms = 5 segundos, 10000ms = 10 segundos)
+quarkus.rest-client.weather-api.connect-timeout=5000
+quarkus.rest-client.weather-api.read-timeout=10000
 ```
+
+**Nota importante:** Los timeouts deben estar en milisegundos (números), no en formato de duración como "5s".
 
 ### Paso 8: Implementar ParkGuard
 
@@ -483,17 +552,54 @@ public class JwtGenerator {
 }
 ```
 
-9.3. Configura JWT en `application.properties`:
+9.3. Genera las claves JWT necesarias:
+
+**Linux/Mac:**
+```bash
+cd parks
+./generate-jwt-keys.sh
+```
+
+**Windows:**
+```cmd
+cd parks
+generate-jwt-keys.bat
+```
+
+**Nota:** Si los scripts no están disponibles, genera las claves manualmente:
+```bash
+cd src/main/resources
+openssl genpkey -algorithm RSA -out privateKey.pem -pkeyopt rsa_keygen_bits:2048
+openssl rsa -pubout -in privateKey.pem -out publicKey.pem
+```
+
+9.4. Configura JWT en `application.properties`:
 
 ```properties
 # JWT Configuration
-mp.jwt.verify.publickey.location=NONE
+mp.jwt.verify.publickey.location=publicKey.pem
 mp.jwt.verify.issuer=https://example.com/issuer
+mp.jwt.verify.publickey.algorithm=RS256
 smallrye.jwt.sign.key.location=privateKey.pem
 smallrye.jwt.encrypt.key.location=publicKey.pem
 ```
 
-**Nota:** Si el ejercicio proporciona archivos `.pem`, cópialos al directorio `src/main/resources/`.
+**Nota importante:** 
+- `mp.jwt.verify.publickey.location` debe ser `publicKey.pem` (NO `NONE`) para que la verificación de JWT funcione
+- Se agrega `mp.jwt.verify.publickey.algorithm=RS256` para especificar el algoritmo
+- Los archivos `privateKey.pem` y `publicKey.pem` deben estar en `src/main/resources/`
+
+9.5. Actualiza el `JwtGenerator` para incluir el issuer:
+
+```java
+public String generateForUser(String username) {
+    return Jwt.claims()
+            .issuer("https://example.com/issuer")
+            .claim(Claims.upn.name(), username)
+            .claim(Claims.groups.name(), java.util.List.of("User", "Admin"))
+            .sign();
+}
+```
 
 ### Paso 10: Agregar Tolerancia a Fallos
 
@@ -514,33 +620,52 @@ smallrye.jwt.encrypt.key.location=publicKey.pem
 mvnw.cmd quarkus:add-extension -Dextension=smallrye-fault-tolerance
 ```
 
-10.2. Modifica la clase `ParkGuard` para usar un método de fallback cuando el servicio weather no esté disponible. Usa el timeout por defecto para proteger el método de un servicio degradado:
+10.2. Modifica la clase `ParkGuard` para usar un método de fallback cuando el servicio weather no esté disponible. Usa un timeout de 5 segundos y maneja la respuesta reactiva:
 
 ```java
+import java.time.temporal.ChronoUnit;
+import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.faulttolerance.Timeout;
 
 @Fallback(fallbackMethod = "assumeNoWarnings")
-@Timeout
-public void checkWeatherForPark(Park park) {
-    var warnings = weatherService.getWarningsByCity(park.city);
-    
-    for (WeatherWarning warning : warnings) {
-        var parkClosed = updateParkBasedOnWarning(park, warning);
-        if (parkClosed) {
-            return;
-        }
-    }
+@Timeout(value = 5, unit = ChronoUnit.SECONDS)
+public Uni<Void> checkWeatherForPark(Park park) {
+    Log.info("Checking weather for park " + park.id + " (" + park.name + ") in city: " + park.city);
+    var warningsStream = weatherService.getWarningsByCity(park.city);
+
+    return warningsStream
+            .onItem()
+            .invoke(warnings -> {
+                Log.info("Received " + warnings.size() + " weather warnings for " + park.city);
+                for (WeatherWarning warning : warnings) {
+                    var parkClosed = updateParkBasedOnWarning(park, warning);
+                    if (parkClosed) {
+                        return;
+                    }
+                }
+            })
+            .onFailure()
+            .invoke(throwable -> {
+                Log.error("Error calling weather service for park " + park.id + " (" + park.name + "): " + throwable.getMessage(), throwable);
+            })
+            .replaceWithVoid();
 }
 
-public void assumeNoWarnings(Park park) {
+public Uni<Void> assumeNoWarnings(Park park) {
     Log.warn(
         "Weather service is not reachable. " +
         "Assuming no weather warnings are active for park " +
         park.id + " (" + park.name + ")."
     );
+    return Uni.createFrom().voidItem();
 }
 ```
+
+**Nota importante:**
+- El método ahora devuelve `Uni<Void>` para soportar programación reactiva
+- El timeout se establece explícitamente a 5 segundos
+- Se agrega logging para facilitar el diagnóstico
 
 10.3. Valida que el servicio parks sea resiliente a fallos del servicio weather. Detén el servicio weather presionando `Ctrl+C` en la terminal donde se está ejecutando.
 
@@ -578,17 +703,17 @@ Debes deshabilitar el Kafka Dev Service para el perfil de prueba. De lo contrari
 
 **Linux/Mac:**
 ```bash
-./mvnw quarkus:add-extension -Dextension=smallrye-reactive-messaging-kafka
+./mvnw quarkus:add-extension -Dextension=quarkus-messaging-kafka
 ```
 
 **Windows (PowerShell):**
 ```powershell
-.\mvnw.cmd quarkus:add-extension -Dextension=smallrye-reactive-messaging-kafka
+.\mvnw.cmd quarkus:add-extension -Dextension=quarkus-messaging-kafka
 ```
 
 **Windows (CMD):**
 ```cmd
-mvnw.cmd quarkus:add-extension -Dextension=smallrye-reactive-messaging-kafka
+mvnw.cmd quarkus:add-extension -Dextension=quarkus-messaging-kafka
 ```
 
 11.2. Crea la clase `WeatherWarningsProcessor` para consumir alertas meteorológicas del canal entrante `weather-warnings`:
@@ -600,12 +725,17 @@ import java.util.List;
 import java.util.concurrent.CompletionStage;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Message;
 import com.redhat.smartcity.weather.WeatherWarning;
 import io.quarkus.logging.Log;
 
+@jakarta.enterprise.context.ApplicationScoped
 public class WeatherWarningsProcessor {
     
     @Inject
@@ -614,23 +744,45 @@ public class WeatherWarningsProcessor {
     @Channel("parks-under-warning")
     Emitter<List<Park>> emitter;
 
+    private final ObjectMapper objectMapper;
+
+    public WeatherWarningsProcessor() {
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+    }
+
     @Incoming("weather-warnings")
     @Transactional
-    public CompletionStage<Void> processWeatherWarning(WeatherWarning warning) {
-        Log.info("[EVENT Received] " + warning);
-        
-        List<Park> parks = Park.find("city = ?1", warning.city).list();
-        
-        parks.forEach(park -> {
-            guard.updateParkBasedOnWarning(park, warning);
-        });
-        
-        return emitter.send(parks);
+    public CompletionStage<Void> processWeatherWarning(Message<String> message) {
+        try {
+            String jsonString = message.getPayload();
+            Log.info("[EVENT Received JSON] " + jsonString);
+            
+            WeatherWarning warning = objectMapper.readValue(jsonString, WeatherWarning.class);
+            Log.info("[EVENT Received] " + warning);
+
+            List<Park> parks = Park.find("city = ?1", warning.city).list();
+
+            parks.forEach(park -> {
+                guard.updateParkBasedOnWarning(park, warning);
+            });
+
+            return message.ack();
+        } catch (Exception e) {
+            Log.error("Error processing weather warning message: " + e.getMessage(), e);
+            return message.nack(e);
+        }
     }
 }
 ```
 
-La anotación `@Transactional` marca el método `processWeatherWarning` como bloqueante.
+**Nota importante:**
+- El método recibe `Message<String>` porque Kafka usa `StringDeserializer`
+- Se deserializa manualmente el JSON usando Jackson `ObjectMapper`
+- Se registra `JavaTimeModule` para manejar `LocalDateTime`
+- Se agrega `@ApplicationScoped` para que sea un bean CDI
+- La anotación `@Transactional` marca el método `processWeatherWarning` como bloqueante
 
 11.3. Deshabilita Kafka Dev Services para el perfil de prueba. Agrega la siguiente línea al archivo `src/main/resources/application.properties`:
 
@@ -711,12 +863,14 @@ import io.smallrye.mutiny.Uni;
 
 @POST
 @Path("/{id}/weathercheck")
+@Operation(summary = "Verificar clima para un parque", description = "Verifica alertas meteorológicas y cierra el parque si es necesario")
 @Transactional
 public Uni<Void> checkWeather(@PathParam("id") Long id) {
-    return Park
-        .<Park>findByIdOptional(id)
-        .map(guard::checkWeatherForPark)
-        .orElseThrow(NotFoundException::new);
+    Park park = Park.findById(id);
+    if (park == null) {
+        throw new NotFoundException();
+    }
+    return guard.checkWeatherForPark(park);
 }
 ```
 
@@ -929,23 +1083,108 @@ python serve.py
 - Verifica que PostgreSQL Dev Services esté funcionando
 - Verifica los logs para errores de conexión a la base de datos
 - Asegúrate de que el puerto 8080 esté libre
+- Verifica que los archivos `.pem` existan en `src/main/resources/`
+
+### Error: "column size does not exist"
+
+**Problema:** La entidad `Park` no tiene el campo `size` definido.
+
+**Solución:** Asegúrate de que la entidad `Park` incluya:
+```java
+public Integer size;
+```
+
+### Error: "401 Unauthorized" al cambiar estado de parques
+
+**Problema:** La configuración JWT no está correcta o las claves no existen.
+
+**Solución:**
+1. Verifica que los archivos `privateKey.pem` y `publicKey.pem` existan en `src/main/resources/`
+2. Verifica que `application.properties` tenga:
+   ```properties
+   mp.jwt.verify.publickey.location=publicKey.pem
+   mp.jwt.verify.publickey.algorithm=RS256
+   ```
+3. Haz logout y login de nuevo para obtener un nuevo token JWT
+
+### Error: "Response could not be mapped to type"
+
+**Problema:** Falta la extensión `quarkus-rest-client-jackson`.
+
+**Solución:** Agrega la dependencia al `pom.xml`:
+```xml
+<dependency>
+    <groupId>io.quarkus</groupId>
+    <artifactId>quarkus-rest-client-jackson</artifactId>
+</dependency>
+```
+
+### Error: "Expected a long value, got '5s'"
+
+**Problema:** Los timeouts del cliente REST están en formato incorrecto.
+
+**Solución:** Usa milisegundos (números) en lugar de formato de duración:
+```properties
+quarkus.rest-client.weather-api.connect-timeout=5000
+quarkus.rest-client.weather-api.read-timeout=10000
+```
+
+### Error: "ClassCastException: String cannot be cast to WeatherWarning"
+
+**Problema:** El procesador de Kafka está intentando recibir `WeatherWarning` directamente, pero Kafka usa `StringDeserializer`.
+
+**Solución:** El procesador debe recibir `Message<String>` y deserializar manualmente:
+```java
+@Incoming("weather-warnings")
+public CompletionStage<Void> processWeatherWarning(Message<String> message) {
+    String jsonString = message.getPayload();
+    WeatherWarning warning = objectMapper.readValue(jsonString, WeatherWarning.class);
+    // ... procesar warning
+    return message.ack();
+}
+```
+
+### Error: "LocalDateTime not supported by default"
+
+**Problema:** El `ObjectMapper` no tiene el módulo JSR310 registrado.
+
+**Solución:** Registra `JavaTimeModule` en el constructor:
+```java
+public WeatherWarningsProcessor() {
+    this.objectMapper = new ObjectMapper();
+    this.objectMapper.registerModule(new JavaTimeModule());
+}
+```
+
+### Warning: "Weather service is not reachable"
+
+**Problema:** El servicio weather no está corriendo o hay un timeout.
+
+**Solución:**
+1. Verifica que el servicio weather esté ejecutándose en el puerto 8090
+2. Prueba con: `curl http://localhost:8090/warnings`
+3. Verifica la configuración del cliente REST en `application.properties`
+4. Aumenta el timeout si es necesario
 
 ### El frontend no carga
 
 - Verifica que el servicio parks esté ejecutándose
 - Verifica que el endpoint `/q/health` responda correctamente
 - Verifica la consola del navegador para errores CORS
+- Verifica que las claves JWT existan (el frontend espera que `/q/health` funcione)
 
 ### Las alertas meteorológicas no funcionan
 
 - Verifica que el servicio weather esté ejecutándose en el puerto 8090
 - Verifica que Kafka esté ejecutándose (si usas Kafka)
 - Verifica la configuración del cliente REST en `application.properties`
+- Verifica los logs para ver si hay errores de conexión o deserialización
 
 ### Las pruebas fallan
 
 - Asegúrate de que Kafka Dev Services esté deshabilitado para el perfil de prueba
 - Verifica que la base de datos de prueba esté configurada correctamente
+- Verifica que `import.sql` tenga el formato correcto (status = 0 para OPEN)
 
 ## Conclusión
 
