@@ -184,14 +184,14 @@ Asegúrate de ejecutar `mvn test`. El script de evaluación verifica que el info
 **Usando Quarkus CLI (Linux/Mac):**
 ```bash
 quarkus create app com.redhat.smartcity:parks \
-  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-smallrye-reactive-messaging-kafka,quarkus-rest-client-reactive,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt \
+  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt \
   --no-code
 ```
 
 **Usando Quarkus CLI (Windows PowerShell):**
 ```powershell
 quarkus create app com.redhat.smartcity:parks `
-  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-smallrye-reactive-messaging-kafka,quarkus-rest-client-reactive,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt `
+  --extension=quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt `
   --no-code
 ```
 
@@ -200,7 +200,7 @@ quarkus create app com.redhat.smartcity:parks `
 mvn io.quarkus.platform:quarkus-maven-plugin:3.26.0:create \
   -DprojectGroupId=com.redhat.smartcity \
   -DprojectArtifactId=parks \
-  -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-smallrye-reactive-messaging-kafka,quarkus-rest-client-reactive,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt" \
+  -Dextensions="quarkus-hibernate-orm-panache,quarkus-jdbc-postgresql,quarkus-rest,quarkus-rest-jackson,quarkus-smallrye-openapi,quarkus-smallrye-health,quarkus-messaging-kafka,quarkus-rest-client,quarkus-smallrye-jwt-build,quarkus-smallrye-jwt" \
   -DnoCode
 ```
 
