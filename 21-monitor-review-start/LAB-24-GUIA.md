@@ -18,7 +18,7 @@ Los microservicios sessions y speakers incluyen todas las extensiones requeridas
 ### 1. Inicia los microservicios
 
 - Para iniciar los microservicios sessions y speakers, usa el modo de desarrollo.
-- Para iniciar el dashboard, ejecuta el script `monitoring/dashboard/serve.py`.
+- Para iniciar el dashboard, ejecuta el script `dashboard/serve.py`.
 
 ### 2. Abre el dashboard
 
@@ -87,7 +87,7 @@ Speakers levanta en el puerto 8082
 
 ```bash
 # Terminal 3 - Dashboard (puerto 8083)
-cd monitoring/dashboard
+cd dashboard
 python3 serve.py
 ```
 
