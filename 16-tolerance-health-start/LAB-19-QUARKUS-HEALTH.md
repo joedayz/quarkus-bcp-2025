@@ -210,6 +210,132 @@ done
 1. Detén el comando watch/curl presionando `CTRL+C`
 2. Cierra la terminal
 
+#### 6.6. ¿Qué Pasa con el Liveness Check en Kubernetes?
+
+**⚠️ Observación Importante:**
+
+Cuando ejecutas `curl http://localhost:8080/crash` y luego monitoreas el health check, notarás que el liveness check queda en estado `DOWN` permanentemente. Esto es el comportamiento esperado en tu entorno local.
+
+**¿Por qué no se recupera automáticamente?**
+
+En tu entorno local, cuando el liveness check falla, simplemente queda en `DOWN` porque no hay ningún sistema que reinicie la aplicación. Sin embargo, **en Kubernetes el comportamiento es completamente diferente**:
+
+1. **Kubernetes monitorea el liveness probe** cada `period` segundos (configurado en `quarkus.openshift.liveness-probe.period=2s`)
+2. Si el liveness probe falla continuamente, Kubernetes considera que el contenedor está en un estado "muerto" o "bloqueado"
+3. **Kubernetes automáticamente reinicia el contenedor** (kill y restart)
+4. Al reiniciarse, el contenedor vuelve a su estado inicial (`alive = true`), por lo que el liveness check vuelve a `UP`
+
+**En resumen:**
+- **Localmente**: El liveness check queda en `DOWN` hasta que reinicies manualmente la aplicación
+- **En Kubernetes**: El liveness check en `DOWN` provoca el reinicio automático del pod, restaurando el estado inicial
+
+## ¿Por Qué Son Importantes los Health Checks para Kubernetes?
+
+Los health checks (liveness y readiness) son fundamentales para el funcionamiento correcto de aplicaciones en Kubernetes. Aquí te explicamos por qué:
+
+### 🔴 Liveness Probe (Sonda de Vida)
+
+**¿Qué es?**
+El liveness probe indica si la aplicación está **funcionando correctamente**. Es como preguntar: "¿Está viva la aplicación?"
+
+**¿Por qué es importante?**
+- **Detección de deadlocks y bloqueos**: Si tu aplicación se bloquea pero el proceso sigue corriendo, Kubernetes lo detecta y reinicia el contenedor
+- **Recuperación automática**: Kubernetes puede recuperar automáticamente aplicaciones que entran en estados inválidos sin intervención manual
+- **Prevención de servicios "zombie"**: Evita que contenedores que parecen estar corriendo pero no responden correctamente sigan recibiendo tráfico
+
+**¿Qué pasa cuando falla?**
+```
+Liveness DOWN → Kubernetes detecta el problema → 
+Kubernetes mata el contenedor → Kubernetes crea un nuevo contenedor → 
+Nuevo contenedor inicia con estado limpio → Liveness vuelve a UP
+```
+
+**Ejemplo práctico:**
+En este laboratorio, cuando llamas a `/crash`, el liveness check pasa a `DOWN`. En Kubernetes:
+- Kubernetes detecta que el liveness probe falla
+- Espera el tiempo configurado (`failureThreshold`)
+- Si continúa fallando, **reinicia el pod automáticamente**
+- El nuevo pod inicia con `StateService.alive = true` (estado inicial)
+- El servicio se recupera automáticamente sin intervención manual
+
+### 🟡 Readiness Probe (Sonda de Preparación)
+
+**¿Qué es?**
+El readiness probe indica si la aplicación está **lista para recibir tráfico**. Es como preguntar: "¿Puedo enviar requests a esta aplicación?"
+
+**¿Por qué es importante?**
+- **Evita tráfico durante el inicio**: Kubernetes no envía tráfico hasta que la aplicación esté completamente lista
+- **Evita tráfico durante mantenimiento**: Si la aplicación entra en modo mantenimiento, Kubernetes deja de enviar tráfico
+- **Rolling updates más seguros**: Durante actualizaciones, Kubernetes espera a que el nuevo pod esté listo antes de enviar tráfico
+
+**¿Qué pasa cuando falla?**
+```
+Readiness DOWN → Kubernetes remueve el pod del Service → 
+No se envía tráfico al pod → Pod puede recuperarse sin afectar usuarios → 
+Readiness vuelve a UP → Kubernetes vuelve a agregar el pod al Service
+```
+
+**Ejemplo práctico:**
+En este laboratorio, las primeras 10 llamadas al readiness check retornan `DOWN`. En Kubernetes:
+- Durante el inicio, Kubernetes espera hasta que el readiness check pase a `UP`
+- Solo después de que el readiness esté `UP`, Kubernetes comienza a enviar tráfico al pod
+- Esto evita que los usuarios reciban errores durante el arranque de la aplicación
+
+### 📊 Comparación: Liveness vs Readiness
+
+| Aspecto | Liveness Probe | Readiness Probe |
+|---------|---------------|-----------------|
+| **Propósito** | ¿Está la aplicación funcionando? | ¿Está la aplicación lista para tráfico? |
+| **Acción si falla** | Reinicia el contenedor | Remueve del Service (no reinicia) |
+| **Cuándo usar** | Para detectar estados bloqueados | Para detectar si está lista para recibir requests |
+| **Frecuencia** | Cada `period` segundos | Cada `period` segundos |
+| **Impacto** | Más severo (reinicio) | Menos severo (solo remueve tráfico) |
+
+### 🎯 Configuración en Kubernetes
+
+Las propiedades que configuraste en `application.properties`:
+
+```properties
+quarkus.openshift.readiness-probe.period=2s
+quarkus.openshift.liveness-probe.period=2s
+```
+
+Se traducen automáticamente a la configuración de probes en Kubernetes:
+
+```yaml
+livenessProbe:
+  httpGet:
+    path: /q/health/live
+    port: 8080
+  periodSeconds: 2
+  initialDelaySeconds: 0
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /q/health/ready
+    port: 8080
+  periodSeconds: 2
+  initialDelaySeconds: 0
+  failureThreshold: 3
+```
+
+### 🚀 Beneficios en Producción
+
+1. **Alta Disponibilidad**: Los pods se recuperan automáticamente de fallos
+2. **Mejor Experiencia de Usuario**: Los usuarios no reciben errores durante el inicio o mantenimiento
+3. **Menos Intervención Manual**: Kubernetes maneja la recuperación automáticamente
+4. **Rolling Updates Seguros**: Las actualizaciones son más seguras y sin downtime
+5. **Detección Temprana de Problemas**: Los problemas se detectan y resuelven automáticamente
+
+### ⚠️ Mejores Prácticas
+
+1. **Liveness debe ser ligero**: No debe hacer operaciones pesadas que puedan afectar el rendimiento
+2. **Readiness debe verificar dependencias**: Debe verificar que las conexiones a bases de datos, APIs externas, etc., estén funcionando
+3. **Configura tiempos apropiados**: `period`, `timeout`, y `failureThreshold` deben ajustarse según tu aplicación
+4. **No uses el mismo endpoint**: Liveness y readiness deben verificar cosas diferentes
+5. **Considera startup probes**: Para aplicaciones que tardan mucho en iniciar, usa startup probes además de liveness
+
 ## Endpoints de Health Checks
 
 Una vez implementados los health checks, Quarkus expone automáticamente los siguientes endpoints:
@@ -327,6 +453,10 @@ En este laboratorio has aprendido a:
 3. ✅ Implementar un **Readiness Health Check** que verifica si la aplicación está lista para recibir tráfico
 4. ✅ Verificar el funcionamiento de los health checks usando curl
 5. ✅ Entender cómo los health checks responden cuando la aplicación falla
+6. ✅ Comprender la **importancia crítica** de los health checks para Kubernetes y cómo Kubernetes los utiliza para:
+   - Reiniciar automáticamente contenedores con problemas (liveness)
+   - Gestionar el tráfico durante el inicio y mantenimiento (readiness)
+   - Mantener alta disponibilidad sin intervención manual
 
 ## Próximos Pasos
 
