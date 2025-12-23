@@ -25,39 +25,6 @@ Para completar este laboratorio hay que asegurarnos que el servicio session pase
 - Maven 3.8+ instalado o usar el wrapper incluido (`mvnw` o `mvnw.cmd`)
 - Acceso al proyecto `17-tolerance-review-start`
 
-## Comandos Multiplataforma
-
-### Windows (PowerShell/CMD)
-```powershell
-# Usar Maven wrapper
-.\mvnw.cmd <comando>
-
-# Ejemplo: ejecutar tests
-.\mvnw.cmd clean test
-```
-
-### Linux/Mac (Bash/Zsh)
-```bash
-# Usar Maven wrapper
-./mvnw <comando>
-
-# Ejemplo: ejecutar tests
-./mvnw clean test
-```
-
-### Docker vs Podman
-
-**Docker:**
-```bash
-docker build -f src/main/docker/Dockerfile.jvm -t session:latest .
-docker run -i --rm -p 8080:8080 session:latest
-```
-
-**Podman:**
-```bash
-podman build -f src/main/docker/Dockerfile.jvm -t session:latest .
-podman run -i --rm -p 8080:8080 session:latest
-```
 
 ---
 
