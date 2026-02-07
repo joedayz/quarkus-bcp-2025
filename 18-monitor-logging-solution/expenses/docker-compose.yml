@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.28
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - xpack.security.enabled=false
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - elk-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.28
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - elk-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  fluentd:
+    build:
+      context: .
+      dockerfile: fluentd/Dockerfile
+    container_name: fluentd
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+    ports:
+      - "5140:5140/udp"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - elk-network
+
+  expenses-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /deployments
+    container_name: expenses-app
+    ports:
+      - "8080:8080"
+    environment:
+      - QUARKUS_LOG_LEVEL=INFO
+      - QUARKUS_LOG_CATEGORY__COM_BCP_TRAINING_EXPENSE__LEVEL=DEBUG
+      - QUARKUS_LOG_SYSLOG_ENABLE=true
+      - QUARKUS_LOG_SYSLOG_ENDPOINT=fluentd:5140
+      - QUARKUS_LOG_SYSLOG_PROTOCOL=udp
+      - QUARKUS_LOG_SYSLOG_APP_NAME=expenses-app
+      - QUARKUS_LOG_SYSLOG_HOSTNAME=expenses-app
+    depends_on:
+      - fluentd
+    networks:
+      - elk-network
+
+networks:
+  elk-network:
+    driver: bridge
+
+volumes:
+  elasticsearch_data:
+    driver: local
+

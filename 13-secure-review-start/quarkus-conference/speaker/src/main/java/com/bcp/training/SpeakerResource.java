@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.Consumes;
@@ -25,12 +26,14 @@ public class SpeakerResource {
     private SpeakerIdGenerator generator = new SpeakerIdGenerator();
 
     @GET
+    @RolesAllowed("read")
     public List<Speaker> getSpeakers() {
         return Speaker.listAll();
     }
 
     @GET
     @Path("/{uuid}")
+    @RolesAllowed("read")
     public Optional<Speaker> findByUuid(@PathParam("uuid") String uuid) {
 
         if (uuid == null) {
@@ -40,6 +43,7 @@ public class SpeakerResource {
     }
 
     @POST
+    @RolesAllowed("modify")
     @Transactional
     public Speaker insert(Speaker speaker) {
         speaker.uuid=generator.generate();
@@ -56,6 +60,7 @@ public class SpeakerResource {
 
     @PUT
     @Transactional
+    @RolesAllowed("modify")
     @Path("/{uuid}")
     public Speaker update(@PathParam("uuid") String uuid, Speaker speaker) {
         if (null==uuid || null==Speaker.find("uuid", uuid)) {

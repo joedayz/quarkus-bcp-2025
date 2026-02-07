@@ -43,8 +43,20 @@ rm "${TEMP_MANIFEST}"
 # Esperar a que los deployments estén listos
 echo ""
 echo "Esperando a que los deployments estén listos..."
-kubectl rollout status deployment/expense-service -w --timeout=5m
-kubectl rollout status deployment/expense-client -w --timeout=5m
+if ! kubectl rollout status deployment/expense-service -w --timeout=5m; then
+  echo ""
+  echo "*** expense-service no quedó listo a tiempo. Posibles causas:"
+  echo "  - Probes: la app debe exponer /q/health/live y /q/health/ready (añade quarkus-smallrye-health en pom.xml)"
+  echo "  - Imagen: ejecuta ./scripts/build-and-push-all.sh y vuelve a desplegar"
+  echo "  - Diagnóstico: ./scripts/diagnose.sh"
+  echo "  - Ver pod: kubectl get pods -l app=expense-service && kubectl describe pod -l app=expense-service"
+  exit 1
+fi
+if ! kubectl rollout status deployment/expense-client -w --timeout=5m; then
+  echo ""
+  echo "*** expense-client no quedó listo a tiempo. Ejecuta: ./scripts/diagnose.sh"
+  exit 1
+fi
 
 echo ""
 echo "=== Despliegue completado ==="

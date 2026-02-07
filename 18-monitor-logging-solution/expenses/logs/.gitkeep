@@ -1,0 +1,3 @@
+# Este directorio contiene los logs generados por la aplicación
+# Los archivos de log son ignorados por git (ver .gitignore)
+

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/$HOME/DO378/monitor-logging/dev.logs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/scripts/simulate-traffic.sh" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/scripts/simulate-traffic.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/src/main/java/com/bcp/training/ExpenseResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/src/main/java/com/bcp/training/ExpenseResource.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="3804e1KpqJigfoQWeBwej0LTNBi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/josediaz/Projects/bcp/quarkus-bcp-2025",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="" />
+      <created>1767923246148</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1767923246148</updated>
+      <workItem from="1767923247493" duration="201000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

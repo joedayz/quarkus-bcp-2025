@@ -1,0 +1,62 @@
+2026-01-10 07:11:05,672 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.344s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:11:05,673 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:11:05,673 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:11:47,101 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:11:48,141 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:11:48,144 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:22:03,779 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.026s
+2026-01-10 07:22:54,837 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.344s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:22:54,839 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:22:54,839 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:23:09,283 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:23:10,305 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:23:10,306 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:25:39,934 INFO  [io.quarkus] (main) expenses stopped in 0.031s
+2026-01-10 07:26:40,658 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.364s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:26:40,661 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:26:40,661 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:28:31,536 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.025s
+2026-01-10 07:29:22,752 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.360s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:29:22,753 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:29:22,754 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:30:29,635 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.016s
+2026-01-10 07:31:32,053 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.367s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:31:32,055 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:31:32,056 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:35:15,360 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:35:16,395 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:35:16,397 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:37:32,372 INFO  [io.quarkus] (main) expenses stopped in 0.036s
+2026-01-10 07:38:27,061 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.395s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:38:27,063 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:38:27,064 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:40:40,609 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:40:41,647 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:40:41,649 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:41:49,887 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.039s
+2026-01-10 07:42:44,800 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.364s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:42:44,802 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:42:44,803 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:42:50,604 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:42:51,640 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:42:51,641 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:44:01,059 INFO  [io.quarkus] (main) expenses stopped in 0.021s
+2026-01-10 07:45:00,781 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.351s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:45:00,782 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:45:00,783 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:45:09,520 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense joel-2
+2026-01-10 07:45:10,560 DEBUG [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Getting expense nonexistent
+2026-01-10 07:45:10,563 ERROR [co.bc.tr.ex.ExpensesResource] (executor-thread-1) Expense not found: nonexistent
+2026-01-10 07:46:13,067 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.025s
+2026-01-10 07:47:10,638 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.356s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:47:10,640 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:47:10,641 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:50:08,882 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.039s
+2026-01-10 07:50:57,829 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.357s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:50:57,831 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:50:57,831 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:51:46,029 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.020s
+2026-01-10 07:55:25,048 INFO  [io.quarkus] (main) expenses 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.26.0) started in 0.455s. Listening on: http://0.0.0.0:8080
+2026-01-10 07:55:25,049 INFO  [io.quarkus] (main) Profile prod activated. 
+2026-01-10 07:55:25,050 INFO  [io.quarkus] (main) Installed features: [cdi, kubernetes, rest, rest-jackson, smallrye-context-propagation, vertx]
+2026-01-10 07:57:56,843 INFO  [io.quarkus] (Shutdown thread) expenses stopped in 0.036s

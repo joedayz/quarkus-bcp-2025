@@ -92,7 +92,7 @@ public class SpeakerResourceTest {
                 .post("/speakers")
                 .then()
                 .statusCode(200)
-                .body("size()", is(5));
+                .body("size()", is(9));
     }
 
     @Test
