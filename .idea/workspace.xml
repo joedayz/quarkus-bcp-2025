@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/01-Introduccion-a-Quarkus.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/03-Quarkus_Panache_Persistence.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/09-reactive-eda-start/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/09-reactive-eda-start/.vscode/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/$HOME/DO378/monitor-logging/dev.logs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/scripts/simulate-traffic.sh" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/scripts/simulate-traffic.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/src/main/java/com/bcp/training/ExpenseResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/19-monitor-metrics-start/expense-service/src/main/java/com/bcp/training/ExpenseResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/01-Introducción a Quarkus.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/02-Desarrollo de Microservicios Cloud-Native con Quarkus.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/02-Desarrollo de Microservicios Cloud-Native con Quarkus.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/03-Persistencia con Panache.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/04-Construyendo Aplicaciones Nativas con Quarkus y GraalVM.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/04-Construyendo Aplicaciones Nativas con Quarkus y GraalVM.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/labs/LAB 5 - QUARKUS NATIVE.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/josediaz/Projects/bcp/quarkus-bcp-2025" value="3804e1KpqJigfoQWeBwej0LTNBi" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "joedayz"
+  }
 }]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/joedayz/quarkus-bcp-2025.git",
+    "accountId": "8ace74dd-f648-466f-b126-a32d5e0f48c1"
+  }
+}]]></component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="3804e1KpqJigfoQWeBwej0LTNBi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,24 +60,50 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
     "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/josediaz/Projects/bcp/quarkus-bcp-2025",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.lookFeel",
+    "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1775930540224" />
+    <option name="spentUsd" value="0.013850801" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="6" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="quarkus-bcp-2025" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.29346.138" />
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
       </set>
     </attachedChunks>
   </component>
@@ -56,10 +115,19 @@
       <option name="presentableId" value="Default" />
       <updated>1767923246148</updated>
       <workItem from="1767923247493" duration="201000" />
+      <workItem from="1774126453708" duration="3458000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
