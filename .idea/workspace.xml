@@ -5,17 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/01-Introduccion-a-Quarkus.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/03-Quarkus_Panache_Persistence.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/06-Mastering_Reactive_Quarkus.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/09-reactive-eda-start/.vscode/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/09-reactive-eda-start/.vscode/settings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/$HOME/DO378/monitor-logging/dev.logs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/18-monitor-logging-start/expenses/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/01-Introducción a Quarkus.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/02-Desarrollo de Microservicios Cloud-Native con Quarkus.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/02-Desarrollo de Microservicios Cloud-Native con Quarkus.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/03-Persistencia con Panache.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/04-Construyendo Aplicaciones Nativas con Quarkus y GraalVM.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/04-Construyendo Aplicaciones Nativas con Quarkus y GraalVM.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/labs/LAB 5 - QUARKUS NATIVE.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/05-Testing-Quarkus.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/05-Testing-Quarkus.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/06-Reactive.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/07-mutiny.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +56,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.MCP Project settings loaded": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -81,10 +76,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1775930540224" />
-    <option name="spentUsd" value="0.013850801" />
+    <option name="spentUsd" value="0.017054051" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="6" />
+    <option name="suspendCountdown" value="4" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -115,7 +110,7 @@
       <option name="presentableId" value="Default" />
       <updated>1767923246148</updated>
       <workItem from="1767923247493" duration="201000" />
-      <workItem from="1774126453708" duration="3458000" />
+      <workItem from="1774126453708" duration="4893000" />
     </task>
     <servers />
   </component>
