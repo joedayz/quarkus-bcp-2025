@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/06-Mastering_Reactive_Quarkus.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/08-Quarkus_Security_Blueprint.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/05-Testing-Quarkus.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/05-Testing-Quarkus.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/06-Reactive.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/07-mutiny.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/09-Seguridad-Quarkus.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,10 +74,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1775930540224" />
-    <option name="spentUsd" value="0.017054051" />
+    <option name="spentUsd" value="0.0215013" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="4" />
+    <option name="suspendCountdown" value="2" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -110,7 +108,7 @@
       <option name="presentableId" value="Default" />
       <updated>1767923246148</updated>
       <workItem from="1767923247493" duration="201000" />
-      <workItem from="1774126453708" duration="4893000" />
+      <workItem from="1774126453708" duration="6210000" />
     </task>
     <servers />
   </component>
