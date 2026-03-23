@@ -4,6 +4,48 @@
 **GitHub Repo:** `https://github.com/joedayz/quarkus-bcp-2025.git`  
 **Proyecto a Abrir:** `06-test-review-start`
 
+## Comandos por plataforma
+
+### Bash (Linux/macOS)
+
+```bash
+cd schedule
+mvn test
+
+cd ../speaker
+mvn test
+
+cd ../session
+mvn test
+```
+
+### PowerShell (Windows)
+
+```powershell
+Set-Location schedule
+mvn test
+
+Set-Location ../speaker
+mvn test
+
+Set-Location ../session
+mvn test
+```
+
+### Docker (si necesitas validar runtime de contenedores)
+
+```bash
+docker ps
+docker pull postgres:14.1
+```
+
+### Podman (equivalente)
+
+```bash
+podman ps
+podman pull postgres:14.1
+```
+
 ## Instrucciones
 
 Está probando una aplicación basada en microservicios que implementa un sistema de gestión de conferencias. La aplicación consta de tres microservicios:

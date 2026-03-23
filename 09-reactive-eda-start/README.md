@@ -18,8 +18,26 @@ https://github.com/joedayz/quarkus-bcp-2025.git
 
 - Java 17 o superior
 - Maven 3.8+
-- Docker y Docker Compose (para Kafka)
+- Docker o Podman (con Compose) para Kafka
 - Un editor de código (VS Code, IntelliJ IDEA, etc.)
+
+## Comandos por shell (referencia rapida)
+
+### Bash (Linux/macOS)
+
+```bash
+cd joedayz-bank
+mvn quarkus:add-extension -Dextensions=quarkus-messaging-kafka
+./mvnw quarkus:dev
+```
+
+### PowerShell (Windows)
+
+```powershell
+Set-Location joedayz-bank
+mvn quarkus:add-extension -Dextensions=quarkus-messaging-kafka
+.\mvnw.cmd quarkus:dev
+```
 
 ## Estructura del Proyecto
 
@@ -473,6 +491,12 @@ Asegúrate de que Kafka esté corriendo. Puedes usar Docker Compose:
 
 ```bash
 docker-compose up -d
+```
+
+O con Podman Compose:
+
+```bash
+podman compose up -d
 ```
 
 ### Puerto ya en uso

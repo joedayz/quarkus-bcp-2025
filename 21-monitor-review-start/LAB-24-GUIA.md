@@ -80,6 +80,16 @@ cd speakers
 ./mvnw quarkus:dev
 ```
 
+```powershell
+# Terminal 1 - Sessions (puerto 8081)
+Set-Location sessions
+.\mvnw.cmd quarkus:dev
+
+# Terminal 2 - Speakers (puerto 8082)
+Set-Location ../speakers
+.\mvnw.cmd quarkus:dev
+```
+
 Sessions levanta en el puerto 8081  
 Speakers levanta en el puerto 8082
 
@@ -89,6 +99,12 @@ Speakers levanta en el puerto 8082
 # Terminal 3 - Dashboard (puerto 8083)
 cd dashboard
 python3 serve.py
+```
+
+```powershell
+# Terminal 3 - Dashboard (puerto 8083)
+Set-Location dashboard
+python serve.py
 ```
 
 Dashboard levanta en el puerto 8083
@@ -246,11 +262,65 @@ pkill -f "quarkus:dev"
 pkill -f "serve.py"
 ```
 
+```powershell
+# En las terminales donde están corriendo los servicios, presiona Ctrl+C
+# O si están corriendo en background, usa:
+Get-Process | Where-Object { $_.Path -like "*java*" -and $_.CommandLine -like "*quarkus:dev*" } | Stop-Process -Force
+Get-Process python -ErrorAction SilentlyContinue | Stop-Process -Force
+```
+
 ---
 
 ## Comandos de Podman (si necesitas iniciar servicios de monitoreo)
 
 Si necesitas iniciar los servicios de monitoreo (Jaeger, Prometheus, Grafana) usando Podman:
+
+## Comandos de Docker (equivalentes)
+
+Cuando uses Docker en lugar de Podman, usa los siguientes equivalentes.
+
+### Opción 1: Usar compose (Docker)
+
+```bash
+# Desde la raíz del proyecto
+docker compose up -d
+
+# Para detener
+docker compose down
+```
+
+### Opción 2: Iniciar servicios individualmente con Docker
+
+```bash
+# Iniciar Jaeger
+docker run -d --name jaeger \
+  -e COLLECTOR_OTLP_ENABLED=true \
+  -p 16686:16686 \
+  -p 14268:14268 \
+  -p 4317:4317 \
+  -p 4318:4318 \
+  jaegertracing/all-in-one:latest
+
+# Iniciar Prometheus
+docker run -d --name prometheus \
+  -p 9090:9090 \
+  -v $(pwd)/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro \
+  prom/prometheus:latest
+
+# Iniciar Grafana
+docker run -d --name grafana \
+  -p 3000:3000 \
+  -v $(pwd)/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro \
+  -v $(pwd)/monitoring/grafana/dashboards:/var/lib/grafana/dashboards:ro \
+  grafana/grafana:latest
+```
+
+Para detener los contenedores:
+
+```bash
+docker stop jaeger prometheus grafana
+docker rm jaeger prometheus grafana
+```
 
 ### Opción 1: Usar el script proporcionado (recomendado)
 

@@ -14,6 +14,8 @@ Los scripts construyen las imágenes Docker y las despliegan usando el Kubernete
 
 **Nota**: No necesitas instalar kind - Docker Desktop incluye Kubernetes.
 
+**Equivalente Podman**: Si trabajas con Podman, usa la guía de `../podman/README.md` (flujo con kind).
+
 ### Pasos
 
 **Linux/macOS (scripts bash):**
@@ -103,3 +105,22 @@ kubectl port-forward svc/expense-client 8081:8080
 - Usa `docker` en lugar de `podman` para construir imágenes
 - Las imágenes se construyen localmente y Docker Desktop Kubernetes las encuentra automáticamente
 - Usa LoadBalancer en lugar de NodePort para exponer el servicio
+
+### Comandos equivalentes con Podman
+
+Para la variante Podman (con kind), ejecuta desde `../podman/`:
+
+```bash
+scripts/kind-up.sh
+scripts/build-and-load-all.sh
+scripts/deploy-all-kind.sh
+```
+
+PowerShell:
+
+```powershell
+.\scripts-windows\kind-up.ps1
+.\scripts-windows\build-and-load-all.ps1
+.\scripts-windows\deploy-all-kind.ps1
+```
+

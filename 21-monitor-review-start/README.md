@@ -15,9 +15,23 @@ cd speakers
 ./mvnw quarkus:dev
 ```
 
+```powershell
+# Terminal 1 - Sessions service
+Set-Location sessions
+.\mvnw.cmd quarkus:dev
+
+# Terminal 2 - Speakers service
+Set-Location ../speakers
+.\mvnw.cmd quarkus:dev
+```
+
 ### 2. Iniciar stack de monitoreo
 ```bash
 ./start-monitoring.sh
+```
+
+```powershell
+bash ./start-monitoring.sh
 ```
 
 ## 📊 Servicios
@@ -37,15 +51,30 @@ El dashboard "BCP Conference Metrics Dashboard" incluye:
 
 ## 🛑 Comandos
 
+### Docker
+
+```bash
+# Iniciar todo
+docker compose up -d
+
+# Detener todo
+docker compose down
+
+# Ver logs
+docker compose logs -f
+```
+
+### Podman
+
 ```bash
 # Iniciar todo
 ./start-monitoring.sh
 
 # Detener todo
-docker-compose down
+podman compose down
 
 # Ver logs
-docker-compose logs -f
+podman compose logs -f
 ```
 
 ## 📝 Generar Métricas

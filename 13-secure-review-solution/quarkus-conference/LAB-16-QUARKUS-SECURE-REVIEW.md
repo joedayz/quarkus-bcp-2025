@@ -9,6 +9,36 @@ Abre el proyecto `13-secure-review-start`.
 
 Este ejercicio usa la aplicación speaker como backend. El backend se integra con un servidor Keycloak para autenticación y autorización. Adicionalmente, el backend se integra con una aplicación front-end SPA.
 
+## Comandos por shell
+
+### Bash (Linux/macOS)
+
+```bash
+mvn quarkus:add-extension -Dextensions=oidc
+mvn clean test -Dtest=ConfigTest
+mvn clean test -Dtest=CorsTest
+mvn clean test -Dtest=SpeakerResourceTest
+mvn quarkus:dev
+```
+
+### PowerShell (Windows)
+
+```powershell
+mvn quarkus:add-extension -Dextensions=oidc
+mvn clean test -Dtest=ConfigTest
+mvn clean test -Dtest=CorsTest
+mvn clean test -Dtest=SpeakerResourceTest
+mvn quarkus:dev
+```
+
+### Frontend (PowerShell)
+
+```powershell
+Set-Location speaker-dashboard
+npm install
+npm run dev
+```
+
 ### 1. Abre la aplicación expenses
 
 #### 1.1. Navega al directorio 13-secure-review

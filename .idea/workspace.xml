@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cbc650e4-2400-4a00-be08-2fa3807d35f0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/08-Quarkus_Security_Blueprint.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AGENTS.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/09-Quarkus_Kubernetes_Deployment.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/09-Seguridad-Quarkus.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/04-develop-review-solution/develop-review/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/04-develop-review-solution/develop-review/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/04-develop-review-start/develop-review/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/04-develop-review-start/develop-review/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/06-test-review-solution/LAB-TEST-REVIEW.md" beforeDir="false" afterPath="$PROJECT_DIR$/06-test-review-solution/LAB-TEST-REVIEW.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/06-test-review-start/LAB-TEST-REVIEW.md" beforeDir="false" afterPath="$PROJECT_DIR$/06-test-review-start/LAB-TEST-REVIEW.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/09-reactive-eda-start/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/09-reactive-eda-start/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/13-secure-review-solution/quarkus-conference/LAB-16-QUARKUS-SECURE-REVIEW.md" beforeDir="false" afterPath="$PROJECT_DIR$/13-secure-review-solution/quarkus-conference/LAB-16-QUARKUS-SECURE-REVIEW.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/13-secure-review-start/quarkus-conference/LAB-16-QUARKUS-SECURE-REVIEW.md" beforeDir="false" afterPath="$PROJECT_DIR$/13-secure-review-start/quarkus-conference/LAB-16-QUARKUS-SECURE-REVIEW.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/14-deploy-k8s-start/docker-desktop/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/14-deploy-k8s-start/docker-desktop/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/21-monitor-review-solution/LAB-24-GUIA.md" beforeDir="false" afterPath="$PROJECT_DIR$/21-monitor-review-solution/LAB-24-GUIA.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/21-monitor-review-solution/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/21-monitor-review-solution/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/21-monitor-review-start/LAB-24-GUIA.md" beforeDir="false" afterPath="$PROJECT_DIR$/21-monitor-review-start/LAB-24-GUIA.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/21-monitor-review-start/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/21-monitor-review-start/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/10-Quarkus-k8s.pdf" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +31,9 @@
     <persistenceIdMap>
       <entry key="_/Users/josediaz/Projects/bcp/quarkus-bcp-2025" value="3804e1KpqJigfoQWeBwej0LTNBi" />
     </persistenceIdMap>
+  </component>
+  <component name="CopilotUserSelectedChatMode">
+    <option name="chatModeId" value="Agent" />
   </component>
   <component name="EmbeddingIndexingInfo">
     <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
@@ -74,10 +90,10 @@
 }]]></component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1775930540224" />
-    <option name="spentUsd" value="0.0215013" />
+    <option name="spentUsd" value="0.03118585" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="2" />
+    <option name="suspendCountdown" value="0" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -108,7 +124,7 @@
       <option name="presentableId" value="Default" />
       <updated>1767923246148</updated>
       <workItem from="1767923247493" duration="201000" />
-      <workItem from="1774126453708" duration="6210000" />
+      <workItem from="1774126453708" duration="9986000" />
     </task>
     <servers />
   </component>

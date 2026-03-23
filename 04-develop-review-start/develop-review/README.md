@@ -12,6 +12,10 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw quarkus:dev
 ```
 
+```powershell
+.\mvnw.cmd quarkus:dev
+```
+
 > **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
 
 ## Packaging and running the application
@@ -20,6 +24,10 @@ The application can be packaged using:
 
 ```shell script
 ./mvnw package
+```
+
+```powershell
+.\mvnw.cmd package
 ```
 
 It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
@@ -33,6 +41,10 @@ If you want to build an _über-jar_, execute the following command:
 ./mvnw package -Dquarkus.package.jar.type=uber-jar
 ```
 
+```powershell
+.\mvnw.cmd package -Dquarkus.package.jar.type=uber-jar
+```
+
 The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
 
 ## Creating a native executable
@@ -43,10 +55,18 @@ You can create a native executable using:
 ./mvnw package -Dnative
 ```
 
+```powershell
+.\mvnw.cmd package -Dnative
+```
+
 Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
 
 ```shell script
 ./mvnw package -Dnative -Dquarkus.native.container-build=true
+```
+
+```powershell
+.\mvnw.cmd package -Dnative -Dquarkus.native.container-build=true
 ```
 
 You can then execute your native executable with: `./target/develop-review-1.0.0-SNAPSHOT-runner`
@@ -80,6 +100,7 @@ Easily start your REST Web Services
 
 ### Docker
 
+```bash
 docker run -d \
 --name dev-postgres \
 -e POSTGRES_USER=developer \
@@ -87,3 +108,16 @@ docker run -d \
 -e POSTGRES_DB=testing \
 -p 5432:5432 \
 postgres:15
+```
+
+### Podman
+
+```bash
+podman run -d \
+--name dev-postgres \
+-e POSTGRES_USER=developer \
+-e POSTGRES_PASSWORD=developer \
+-e POSTGRES_DB=testing \
+-p 5432:5432 \
+postgres:15
+```
